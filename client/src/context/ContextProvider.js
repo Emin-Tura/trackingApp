@@ -8,6 +8,8 @@ const initialState = {
   alert: { open: false, severity: "info", message: "" },
   users: [],
   profile: { open: false, file: null, photoURL: "" },
+  details: { title: "", description: "" },
+  images: [],
 };
 
 const Context = createContext(initialState);

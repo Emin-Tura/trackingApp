@@ -30,7 +30,7 @@ const UsersActions = ({ params, rowId, setRowId }) => {
   }, [params.id, rowId, success]);
 
   const handleDelete = () => {
-    let text = "Çalışanı Silmek istediğinize emin misiniz?";
+    let text = "Kişiyi Silmek istediğinize emin misiniz?";
     if (window.confirm(text)) {
       deleteUser(params.row, currentUser, dispatch);
     }
@@ -83,7 +83,7 @@ const UsersActions = ({ params, rowId, setRowId }) => {
         )}
       </Box>
       <Box>
-        <Tooltip title="Çalışanı Sil">
+        <Tooltip title="Sil">
           <Fab
             color="error"
             sx={{

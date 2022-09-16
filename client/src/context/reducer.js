@@ -22,6 +22,21 @@ const reducer = (state, action) => {
         ...state,
         users: state.users.filter((user) => user._id !== action.payload),
       };
+    case "UPDATE_DETAILS":
+      return { ...state, details: { ...state.details, ...action.payload } };
+    case "UPDATE_IMAGES":
+      return { ...state, images: [...state.images, ...action.payload] };
+    case "DELETE_IMAGE":
+      return {
+        ...state,
+        images: state.images.filter((image) => image !== action.payload),
+      };
+    case "RESET_PRODUCT":
+      return {
+        ...state,
+        images: [],
+        details: { title: "", description: "" },
+      };
     default:
       throw new Error("No matched action!");
   }

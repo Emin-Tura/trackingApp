@@ -81,7 +81,6 @@ const SideList = ({ open, setOpen }) => {
     state: { currentUser },
     dispatch,
   } = useValue();
-  console.log(currentUser);
 
   const [selectedLink, setSelectedLink] = React.useState("");
 

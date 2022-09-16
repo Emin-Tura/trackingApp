@@ -59,7 +59,7 @@ const Users = ({ setSelectedLink, link }) => {
       },
       {
         field: "actions",
-        headerName: "Kaydet",
+        headerName: "İşlem",
         type: "actions",
         width: 125,
         renderCell: (params) => (
