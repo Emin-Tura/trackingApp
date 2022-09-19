@@ -78,7 +78,7 @@ const Drawer = styled(MuiDrawer, {
 
 const SideList = ({ open, setOpen }) => {
   const {
-    state: { currentUser },
+    state: { currentUser, users },
     dispatch,
   } = useValue();
 
@@ -93,7 +93,7 @@ const SideList = ({ open, setOpen }) => {
         component: <Main {...{ setSelectedLink, link: "" }} />,
       },
       {
-        title: "Kullanıcılar",
+        title: "Çalışanlar",
         icon: <PeopleAlt />,
         link: "users",
         component: <Users {...{ setSelectedLink, link: "users" }} />,
@@ -178,8 +178,12 @@ const SideList = ({ open, setOpen }) => {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Routes>
-          {list.map((item) => (
-            <Route key={item.title} path={item.link} element={item.component} />
+          {list?.map((item) => (
+            <Route
+              key={item?.title}
+              path={item?.link}
+              element={item?.component}
+            />
           ))}
         </Routes>
       </Box>

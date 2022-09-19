@@ -10,6 +10,7 @@ const initialState = {
   profile: { open: false, file: null, photoURL: "" },
   details: { title: "", description: "" },
   images: [],
+  products: [],
 };
 
 const Context = createContext(initialState);

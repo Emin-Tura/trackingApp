@@ -26,25 +26,25 @@ for (let i = 0; i < months; i++) {
   });
 }
 
-export default function AreaUsers() {
+export default function AreaUsersProducts() {
   const {
-    state: { users },
+    state: { users, products },
   } = useValue();
   const [data, setData] = React.useState([]);
 
   useEffect(() => {
     for (let i = 0; i < months; i++) {
-      tempData[i].users = 0;
+      tempData[i].products = 0;
     }
-    users.forEach((user) => {
+    products.forEach((user) => {
       for (let i = 0; i < months; i++) {
         if (moment(tempData[i].date).isSame(user?.createdAt, "month")) {
-          return tempData[i].users++;
+          return tempData[i].products++;
         }
       }
     });
     setData([...tempData]);
-  }, [users]);
+  }, [products]);
 
   useEffect(() => {
     for (let i = 0; i < months; i++) {
@@ -75,6 +75,13 @@ export default function AreaUsers() {
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
+          <Area
+            type="monotone"
+            dataKey="products"
+            stackId="1"
+            stroke="#8884d8"
+            fill="#8884d8"
+          />
           <Area
             type="monotone"
             dataKey="users"

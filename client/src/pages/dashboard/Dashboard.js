@@ -11,6 +11,7 @@ import MuiAppBar from "@mui/material/AppBar";
 import { Brightness4, Brightness7, Home, Menu } from "@mui/icons-material";
 import React, { useMemo } from "react";
 import SideList from "./SideList";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 280;
 
@@ -50,6 +51,8 @@ export default function Dashboard() {
     setOpen(true);
   };
 
+  const navigate = useNavigate();
+
   return (
     <ThemeProvider theme={darkTheme}>
       <Box sx={{ display: "flex" }}>
@@ -68,7 +71,7 @@ export default function Dashboard() {
             >
               <Menu />
             </IconButton>
-            <Tooltip title="Anasayfa">
+            <Tooltip title="Anasayfa" onClick={() => navigate("/")}>
               <IconButton sx={{ mr: 1 }}>
                 <Home />
               </IconButton>

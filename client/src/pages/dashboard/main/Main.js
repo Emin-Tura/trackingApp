@@ -14,16 +14,18 @@ import {
 import { getUsers } from "../../../actions/user";
 import { useValue } from "../../../context/ContextProvider";
 import moment from "moment";
-import AreaUsers from "./AreaUsers";
+import AreaUsersProducts from "./AreaUsersProducts";
+import { getProducts } from "../../../actions/product";
 
 const Main = ({ setSelectedLink, link }) => {
   const {
-    state: { users },
+    state: { users, products },
     dispatch,
   } = useValue();
   useEffect(() => {
     setSelectedLink(link);
     if (users.length === 0) getUsers(dispatch);
+    if (products.length === 0) getProducts(dispatch);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
@@ -60,7 +62,7 @@ const Main = ({ setSelectedLink, link }) => {
           }}
         >
           <Store sx={{ height: 100, width: 100, opacity: 0.3, mr: 1 }} />
-          <Typography variant="h4">11</Typography>
+          <Typography variant="h4">{products.length}</Typography>
         </Box>
       </Paper>
       <Paper elevation={3} sx={{ p: 2, gridColumn: 3, gridRow: "1/4" }}>
@@ -85,9 +87,32 @@ const Main = ({ setSelectedLink, link }) => {
             ))}
           </List>
         </Box>
+        <Divider sx={{ mt: 3, mb: 3, opacity: 0.8 }} />
+
+        <Box>
+          <Typography>Son Eklenen Ürünler</Typography>
+          <List>
+            {products.slice(0, 4).map((product, i) => (
+              <Box key={product?._id}>
+                <ListItem>
+                  <ListItemAvatar>
+                    <Avatar alt={product?.title} src={product?.images[0]} />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={product?.title}
+                    secondary={`Oluşturma Zamanı: ${moment(
+                      product?.createdAt
+                    ).format("YYYY-MM-DD H:mm:ss")}`}
+                  />
+                </ListItem>
+                {i !== 3 && <Divider variant="inset" />}
+              </Box>
+            ))}
+          </List>
+        </Box>
       </Paper>
       <Paper elevation={3} sx={{ p: 2, gridColumn: "1/3" }}>
-        <AreaUsers />
+        <AreaUsersProducts />
       </Paper>
     </Box>
   );

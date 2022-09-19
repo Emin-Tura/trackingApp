@@ -1,6 +1,6 @@
 import { Avatar, InputAdornment, TextField } from "@mui/material";
 import React from "react";
-import { useValue } from "../../../context/ContextProvider";
+import { useValue } from "../context/ContextProvider";
 import pendingIcon from "./icons/progress1.svg";
 import { Check } from "@mui/icons-material";
 

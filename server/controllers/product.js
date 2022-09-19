@@ -6,3 +6,13 @@ export const createProduct = tryCatch(async (req, res) => {
   await newProduct.save();
   res.status(201).json({ success: true, result: newProduct });
 });
+
+export const getProducts = tryCatch(async (req, res) => {
+  const rooms = await Product.find().sort({ _id: -1 });
+  res.status(200).json({ success: true, result: rooms });
+});
+
+export const deleteProduct = tryCatch(async (req, res) => {
+  const { _id } = await Product.findByIdAndDelete(req.params.productId);
+  res.status(200).json({ success: true, result: { _id } });
+});

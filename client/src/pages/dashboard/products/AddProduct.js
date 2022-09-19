@@ -1,11 +1,18 @@
-import { DownloadDone } from "@mui/icons-material";
-import { Box, Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { Close, DownloadDone } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+} from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
 import { createProduct } from "../../../actions/product";
 import { useValue } from "../../../context/ContextProvider";
 import AddImages from "./addImages/AddImages";
-import InfoField from "./InfoField";
+import InfoField from "../../../components/InfoField";
 
 const AddProduct = () => {
   const {
@@ -41,7 +48,20 @@ const AddProduct = () => {
             "& .MuiTextField-root": { width: "100%", maxWidth: 500, m: 1 },
           }}
         >
-          <DialogTitle>Ürün Oluştur</DialogTitle>
+          <DialogTitle>
+            Ürün Oluştur
+            <IconButton
+              sx={{
+                position: "absolute",
+                top: 8,
+                right: 8,
+                color: (theme) => theme.palette.grey[500],
+              }}
+              onClick={() => dispatch({ type: "CLOSE_LOGIN" })}
+            >
+              <Close />
+            </IconButton>
+          </DialogTitle>
           <DialogContent dividers sx={{ maxWidth: 500 }}>
             <Box>
               <InfoField
@@ -66,7 +86,9 @@ const AddProduct = () => {
             variant="contained"
             endIcon={<DownloadDone />}
             sx={{ my: 2 }}
-            disabled={!(title.length > 4 && description.length > 9)}
+            disabled={
+              !(title.length > 4 && description.length > 9 && images.length > 0)
+            }
             onClick={handleSubmit}
           >
             Kaydet
