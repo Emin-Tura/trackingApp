@@ -20,8 +20,7 @@ const Users = ({ setSelectedLink, link }) => {
   useEffect(() => {
     setSelectedLink(link);
     if (users.length === 0) getUsers(dispatch);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, link, setSelectedLink, users.length]);
 
   const columns = useMemo(
     () => [

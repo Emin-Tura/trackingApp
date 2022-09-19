@@ -78,7 +78,7 @@ const Drawer = styled(MuiDrawer, {
 
 const SideList = ({ open, setOpen }) => {
   const {
-    state: { currentUser, users },
+    state: { currentUser },
     dispatch,
   } = useValue();
 

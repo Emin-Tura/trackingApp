@@ -49,6 +49,11 @@ const reducer = (state, action) => {
           (product) => product._id !== action.payload
         ),
       };
+    case "UPDATE_PRODUCT":
+      return {
+        ...state,
+        product: action.payload,
+      };
     default:
       throw new Error("No matched action!");
   }

@@ -11,6 +11,7 @@ const initialState = {
   details: { title: "", description: "" },
   images: [],
   products: [],
+  product: null,
 };
 
 const Context = createContext(initialState);

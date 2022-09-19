@@ -5,6 +5,7 @@ import { useValue } from "../../../context/ContextProvider";
 import AddProduct from "./AddProduct";
 import ProductsList from "./ProductsList";
 import { getProducts } from "../../../actions/product";
+import Product from "./Product";
 
 const Products = ({ setSelectedLink, link }) => {
   const { dispatch } = useValue();
@@ -26,6 +27,7 @@ const Products = ({ setSelectedLink, link }) => {
       </Button>
       <ProductsList />
       <AddProduct />
+      <Product />
     </Box>
   );
 };

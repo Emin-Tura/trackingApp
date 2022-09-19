@@ -58,6 +58,9 @@ const ProductsList = () => {
                 alt={product.title}
                 loading="lazy"
                 style={{ cursor: "pointer" }}
+                onClick={() =>
+                  dispatch({ type: "UPDATE_PRODUCT", payload: product })
+                }
               />
               <ImageListItemBar title={product.description} />
             </ImageListItem>
