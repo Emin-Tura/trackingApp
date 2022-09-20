@@ -20,12 +20,16 @@ import {
   Dashboard,
   PeopleAlt,
   Store,
+  CalendarMonth,
+  Task,
 } from "@mui/icons-material";
 import { useValue } from "../../context/ContextProvider";
 import { useNavigate, Routes, Route } from "react-router-dom";
 import Main from "./main/Main";
 import Users from "./users/Users";
 import Products from "./products/Products";
+import Calendar from "./calendar/Calendar";
+import Tasks from "./tasks/Tasks";
 
 const drawerWidth = 280;
 
@@ -103,6 +107,18 @@ const SideList = ({ open, setOpen }) => {
         icon: <Store />,
         link: "products",
         component: <Products {...{ setSelectedLink, link: "products" }} />,
+      },
+      {
+        title: "Takvim",
+        icon: <CalendarMonth />,
+        link: "calendar",
+        component: <Calendar {...{ setSelectedLink, link: "calendar" }} />,
+      },
+      {
+        title: "Görevler",
+        icon: <Task />,
+        link: "tasks",
+        component: <Tasks {...{ setSelectedLink, link: "tasks" }} />,
       },
     ],
     []

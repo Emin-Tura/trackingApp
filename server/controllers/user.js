@@ -4,11 +4,11 @@ import jwt from "jsonwebtoken";
 import tryCatch from "./utils/tryCatch.js";
 
 export const login = tryCatch(async (req, res) => {
-  const { name, password } = req.body;
+  const { email, password } = req.body;
 
-  const nameLowerCase = name.toLowerCase();
+  const emailLowerCase = email.toLowerCase();
 
-  const existedUser = await User.findOne({ name: nameLowerCase });
+  const existedUser = await User.findOne({ email: emailLowerCase });
   if (!existedUser)
     return res.status(404).json({
       success: false,
@@ -21,18 +21,18 @@ export const login = tryCatch(async (req, res) => {
       message: "Giriş Bilgileri Hatalı veya Böyle Bir Kullanıcı Yok",
     });
 
-  const { _id: id, name: tempName, photoURL, role, active } = existedUser;
+  const { _id: id, email: tempEmail, photoURL, role, active } = existedUser;
   if (!active)
     return res.status(400).json({
       success: false,
       message: "Bu hesap askıya alındı! Yöneticiyle iletişime geçmeyi deneyin",
     });
-  const token = jwt.sign({ id, name, photoURL }, process.env.JWT_SECRET, {
+  const token = jwt.sign({ id, email, photoURL }, process.env.JWT_SECRET, {
     expiresIn: "1h",
   });
   res.status(200).json({
     success: true,
-    result: { id, name: nameLowerCase, photoURL, token, role, active },
+    result: { id, email: emailLowerCase, photoURL, token, role, active },
   });
 });
 

@@ -16,14 +16,14 @@ import { useValue } from "../../context/ContextProvider";
 const Login = () => {
   const { dispatch } = useValue();
 
-  const nameRef = useRef();
+  const emailRef = useRef();
   const passwordRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const name = nameRef.current.value;
+    const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    login({ name, password }, dispatch);
+    login({ email, password }, dispatch);
   };
 
   return (
@@ -45,11 +45,11 @@ const Login = () => {
               autoFocus
               margin="dense"
               variant="outlined"
-              id="name"
-              label="Kullanıcı Adı"
+              id="email"
+              label="E-posta"
               type="text"
               fullWidth
-              inputRef={nameRef}
+              inputRef={emailRef}
               inputProps={{ minLength: 2 }}
               required
             />

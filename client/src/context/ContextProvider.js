@@ -12,6 +12,7 @@ const initialState = {
   images: [],
   products: [],
   product: null,
+  task: null,
 };
 
 const Context = createContext(initialState);

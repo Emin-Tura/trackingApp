@@ -54,6 +54,11 @@ const reducer = (state, action) => {
         ...state,
         product: action.payload,
       };
+    case "RESET_TASK":
+      return {
+        ...state,
+        task: null,
+      };
     default:
       throw new Error("No matched action!");
   }
