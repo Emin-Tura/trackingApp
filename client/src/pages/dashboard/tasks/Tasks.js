@@ -1,41 +1,38 @@
 import {
   Box,
   Typography,
-  Stack,
-  Paper,
   Container,
   TextField,
-  InputAdornment,
   IconButton,
+  Divider,
 } from "@mui/material";
 import React, { useEffect, useRef } from "react";
-import { styled } from "@mui/material/styles";
 import { Check } from "@mui/icons-material";
 import { useValue } from "../../../context/ContextProvider";
-import { createTask } from "../../../actions/task";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#e0e0e0",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
+import { createTask, getTasks } from "../../../actions/task";
+import ChipSelect from "../../../components/ChipSelect";
+import { getUsers } from "../../../actions/user";
+import TasksList from "./TasksList";
 
 const Tasks = ({ setSelectedLink, link }) => {
   const {
     dispatch,
-    state: { currentUser },
+    state: { currentUser, assigned },
   } = useValue();
   const taskRef = useRef();
+
   useEffect(() => {
     setSelectedLink(link);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    getUsers(dispatch);
+    getTasks(dispatch);
+  }, [dispatch, link, setSelectedLink]);
 
   const handleTaskSubmit = (e) => {
     const task = taskRef.current.value;
-    createTask(currentUser, { task }, dispatch);
+    const newTask = { task, assigned };
+
+    createTask(currentUser, newTask, dispatch);
+    taskRef.current.value = "";
   };
 
   return (
@@ -47,7 +44,7 @@ const Tasks = ({ setSelectedLink, link }) => {
       >
         Görevler
       </Typography>
-      <Container sx={{ width: "65%" }}>
+      <Container sx={{ width: "75%", display: "flex", alignItems: "center" }}>
         <TextField
           margin="normal"
           variant="standard"
@@ -57,17 +54,17 @@ const Tasks = ({ setSelectedLink, link }) => {
           fullWidth
           inputRef={taskRef}
           inputProps={{ minLength: 2 }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={handleTaskSubmit}>
-                  <Check />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
         />
+        <ChipSelect />
+        <IconButton
+          onClick={handleTaskSubmit}
+          disabled={!taskRef.current?.value}
+        >
+          <Check />
+        </IconButton>
       </Container>
+      <Divider sx={{ my: 1, opacity: 0.8 }} />
+      <TasksList />
     </Box>
   );
 };

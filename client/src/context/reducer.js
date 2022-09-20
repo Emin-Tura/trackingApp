@@ -54,11 +54,22 @@ const reducer = (state, action) => {
         ...state,
         product: action.payload,
       };
-    case "RESET_TASK":
+    case "UPDATE_TASKS":
       return {
         ...state,
-        task: null,
+        tasks: action.payload,
       };
+    case "SET_ASSIGNEE":
+      return {
+        ...state,
+        assigned: [...action.payload],
+      };
+    case "RESET_ASSIGNEE":
+      return {
+        ...state,
+        assigned: null,
+      };
+
     default:
       throw new Error("No matched action!");
   }

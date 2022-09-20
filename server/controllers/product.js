@@ -8,8 +8,8 @@ export const createProduct = tryCatch(async (req, res) => {
 });
 
 export const getProducts = tryCatch(async (req, res) => {
-  const rooms = await Product.find().sort({ _id: -1 });
-  res.status(200).json({ success: true, result: rooms });
+  const product = await Product.find().sort({ _id: -1 });
+  res.status(200).json({ success: true, result: product });
 });
 
 export const deleteProduct = tryCatch(async (req, res) => {

@@ -17,7 +17,14 @@ export const createTask = async (currentUser, task, dispatch) => {
         message: "Görev Başarıyla Oluşturuldu",
       },
     });
-    dispatch({ type: "RESET_TASK" });
+    dispatch({ type: "RESET_ASSIGNEE" });
   }
   dispatch({ type: "END_LOADING" });
+};
+
+export const getTasks = async (dispatch) => {
+  const result = await fetchData({ url, method: "GET" }, dispatch);
+  if (result) {
+    dispatch({ type: "UPDATE_TASKS", payload: result });
+  }
 };
