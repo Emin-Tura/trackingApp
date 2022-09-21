@@ -4,6 +4,7 @@ const taskSchema = mongoose.Schema(
   {
     task: { type: String, max: 250, required: true },
     assigned: { type: [String] },
+    currentUser: { type: [] },
   },
   { timestamps: true }
 );

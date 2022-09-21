@@ -13,6 +13,7 @@ import { createTask, getTasks } from "../../../actions/task";
 import ChipSelect from "../../../components/ChipSelect";
 import { getUsers } from "../../../actions/user";
 import TasksList from "./TasksList";
+import InfoField from "../../../components/InfoField";
 
 const Tasks = ({ setSelectedLink, link }) => {
   const {
@@ -20,6 +21,7 @@ const Tasks = ({ setSelectedLink, link }) => {
     state: { currentUser, assigned },
   } = useValue();
   const taskRef = useRef();
+  console.log(currentUser);
 
   useEffect(() => {
     setSelectedLink(link);
@@ -29,9 +31,9 @@ const Tasks = ({ setSelectedLink, link }) => {
 
   const handleTaskSubmit = (e) => {
     const task = taskRef.current.value;
-    const newTask = { task, assigned };
+    const newTask = { task, assigned, currentUser };
 
-    createTask(currentUser, newTask, dispatch);
+    createTask(newTask, dispatch);
     taskRef.current.value = "";
   };
 
@@ -44,27 +46,43 @@ const Tasks = ({ setSelectedLink, link }) => {
       >
         Görevler
       </Typography>
-      <Container sx={{ width: "75%", display: "flex", alignItems: "center" }}>
-        <TextField
-          margin="normal"
-          variant="standard"
-          id="task"
-          label="Lütfen Görevi Giriniz"
-          type="text"
-          fullWidth
-          inputRef={taskRef}
-          inputProps={{ minLength: 2 }}
-        />
-        <ChipSelect />
-        <IconButton
-          onClick={handleTaskSubmit}
-          disabled={!taskRef.current?.value}
-        >
-          <Check />
-        </IconButton>
+
+      {currentUser.role === "Yönetim" && (
+        <Container sx={{ width: "75%", display: "flex", alignItems: "center" }}>
+          <TextField
+            margin="normal"
+            variant="standard"
+            id="task"
+            label="Lütfen Görevi Giriniz"
+            type="text"
+            fullWidth
+            inputRef={taskRef}
+            inputProps={{ minLength: 2 }}
+            multiline
+          />
+          <ChipSelect />
+          <IconButton
+            onClick={handleTaskSubmit}
+            disabled={!taskRef.current?.value}
+          >
+            <Check />
+          </IconButton>
+        </Container>
+      )}
+
+      <Divider sx={{ my: 2, opacity: 0.8 }} />
+
+      <Container
+        sx={{
+          width: "90%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <TasksList />
       </Container>
-      <Divider sx={{ my: 1, opacity: 0.8 }} />
-      <TasksList />
     </Box>
   );
 };

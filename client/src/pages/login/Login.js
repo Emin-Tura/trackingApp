@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Send } from "@mui/icons-material";
 import PasswordField from "./PasswordField";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo1.png";
 import { login } from "../../actions/user";
 import { useValue } from "../../context/ContextProvider";
 
