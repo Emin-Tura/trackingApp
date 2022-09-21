@@ -14,10 +14,22 @@ const userSchema = mongoose.Schema(
     photoURL: { data: Buffer, type: String },
     role: {
       type: String,
-      default: "Bilgi İşlem",
-      enum: ["Yönetim", "Bilgi İşlem", "İnsan Kaynakları"],
+      default: "IT / Bilişim",
+      enum: [
+        "Yönetim",
+        "IT / Bilişim",
+        "İnsan Kaynakları",
+        "Stajyer",
+        "Satış",
+        "Muhasebe",
+      ],
     },
     active: { type: Boolean, default: true },
+    authority: {
+      type: String,
+      default: "Yetki Yok",
+      enum: ["Tam Yetki", "Kısıtlı Yetki", "Yetki Yok"],
+    },
   },
   { timestamps: true }
 );

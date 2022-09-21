@@ -10,13 +10,12 @@ import CreateUser from "./CreateUser";
 
 const Users = ({ setSelectedLink, link }) => {
   const {
-    state: { users },
+    state: { users, currentUser },
     dispatch,
   } = useValue();
 
   const [pageSize, setPageSize] = useState(5);
   const [rowId, setRowId] = useState(null);
-
   useEffect(() => {
     setSelectedLink(link);
     if (users.length === 0) getUsers(dispatch);
@@ -27,7 +26,7 @@ const Users = ({ setSelectedLink, link }) => {
       {
         field: "photoURL",
         headerName: "Resim",
-        width: 80,
+        width: 70,
         renderCell: (params) => <Avatar src={params.row.photoURL} />,
         sortable: false,
         filterable: false,
@@ -39,22 +38,37 @@ const Users = ({ setSelectedLink, link }) => {
         headerName: "Rol",
         width: 150,
         type: "singleSelect",
-        valueOptions: ["Yönetim", "Bilgi İşlem", "İnsan Kaynakları"],
-        editable: true,
+        valueOptions: [
+          "Yönetim",
+          "IT / Bilişim",
+          "İnsan Kaynakları",
+          "Stajyer",
+          "Satış",
+          "Muhasebe",
+        ],
+        editable: currentUser.authority === "Tam Yetki" ? true : false,
       },
       {
         field: "active",
         headerName: "Aktif",
         width: 100,
         type: "boolean",
-        editable: true,
+        editable: currentUser.authority === "Tam Yetki" ? true : false,
       },
       {
         field: "createdAt",
         headerName: "Kayıt Tarihi",
-        width: 200,
+        width: 175,
         renderCell: (params) =>
           moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
+      },
+      currentUser.authority === "Tam Yetki" && {
+        field: "authority",
+        headerName: "Yetki",
+        width: 150,
+        type: "singleSelect",
+        valueOptions: ["Tam Yetki", "Kısıtlı Yetki", "Yetki Yok"],
+        editable: true,
       },
       {
         field: "actions",
@@ -66,7 +80,7 @@ const Users = ({ setSelectedLink, link }) => {
         ),
       },
     ],
-    [rowId]
+    [currentUser.authority, rowId]
   );
 
   return (
@@ -106,19 +120,21 @@ const Users = ({ setSelectedLink, link }) => {
                     : "grey.200",
               },
             },
-            px: 6,
+            px: 2,
           }}
           onCellEditCommit={(params) => setRowId(params.id)}
         />
 
-        <Button
-          onClick={() => dispatch({ type: "OPEN_LOGIN" })}
-          variant="contained"
-          endIcon={<PersonAddAlt />}
-          sx={{ my: 2, ml: 6 }}
-        >
-          Yeni Kayıt
-        </Button>
+        {currentUser.authority !== "Yetki Yok" && (
+          <Button
+            onClick={() => dispatch({ type: "OPEN_LOGIN" })}
+            variant="contained"
+            endIcon={<PersonAddAlt />}
+            sx={{ my: 2, ml: 6 }}
+          >
+            Yeni Kayıt
+          </Button>
+        )}
       </Box>
       <CreateUser />
     </>

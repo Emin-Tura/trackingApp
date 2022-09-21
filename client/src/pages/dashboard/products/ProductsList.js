@@ -18,9 +18,20 @@ const ProductsList = () => {
   } = useValue();
 
   const handleDelete = (params) => {
-    let text = "Ürünü Silmek İstediğinize Emin Misiniz?";
-    if (window.confirm(text)) {
-      deleteProduct(currentUser, params, dispatch);
+    if (currentUser.authority === "Tam Yetki") {
+      let text = "Ürünü Silmek İstediğinize Emin Misiniz?";
+      if (window.confirm(text)) {
+        deleteProduct(currentUser, params, dispatch);
+      }
+    } else {
+      dispatch({
+        type: "UPDATE_ALERT",
+        payload: {
+          open: true,
+          severity: "info",
+          message: "Bu işlem için yetkiniz yok!",
+        },
+      });
     }
   };
 

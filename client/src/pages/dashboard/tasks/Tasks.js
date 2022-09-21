@@ -13,7 +13,6 @@ import { createTask, getTasks } from "../../../actions/task";
 import ChipSelect from "../../../components/ChipSelect";
 import { getUsers } from "../../../actions/user";
 import TasksList from "./TasksList";
-import InfoField from "../../../components/InfoField";
 
 const Tasks = ({ setSelectedLink, link }) => {
   const {
@@ -21,7 +20,6 @@ const Tasks = ({ setSelectedLink, link }) => {
     state: { currentUser, assigned },
   } = useValue();
   const taskRef = useRef();
-  console.log(currentUser);
 
   useEffect(() => {
     setSelectedLink(link);
@@ -47,7 +45,7 @@ const Tasks = ({ setSelectedLink, link }) => {
         Görevler
       </Typography>
 
-      {currentUser.role === "Yönetim" && (
+      {currentUser.authority === "Tam Yetki" && (
         <Container sx={{ width: "75%", display: "flex", alignItems: "center" }}>
           <TextField
             margin="normal"

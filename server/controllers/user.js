@@ -21,7 +21,14 @@ export const login = tryCatch(async (req, res) => {
       message: "Giriş Bilgileri Hatalı veya Böyle Bir Kullanıcı Yok",
     });
 
-  const { _id: id, email: tempEmail, photoURL, role, active } = existedUser;
+  const {
+    _id: id,
+    email: tempEmail,
+    photoURL,
+    role,
+    authority,
+    active,
+  } = existedUser;
   if (!active)
     return res.status(400).json({
       success: false,
@@ -32,7 +39,15 @@ export const login = tryCatch(async (req, res) => {
   });
   res.status(200).json({
     success: true,
-    result: { id, email: emailLowerCase, photoURL, token, role, active },
+    result: {
+      id,
+      email: emailLowerCase,
+      photoURL,
+      token,
+      role,
+      authority,
+      active,
+    },
   });
 });
 
@@ -42,8 +57,8 @@ export const getUsers = tryCatch(async (req, res) => {
 });
 
 export const updateStatus = tryCatch(async (req, res) => {
-  const { role, active } = req.body;
-  await User.findByIdAndUpdate(req.params.userId, { role, active });
+  const { role, authority, active } = req.body;
+  await User.findByIdAndUpdate(req.params.userId, { role, authority, active });
   res.status(200).json({ success: true, result: { _id: req.params.userId } });
 });
 
@@ -61,13 +76,22 @@ export const createUser = tryCatch(async (req, res) => {
     email: emailLowerCase,
     photoURL,
   });
-  const { _id: id, photoURL: tempPhotoURL, role, active } = user;
+  const { _id: id, photoURL: tempPhotoURL, role, authority, active } = user;
   const token = jwt.sign({ id, name, tempPhotoURL }, process.env.JWT_SECRET, {
     expiresIn: "1h",
   });
   res.status(201).json({
     success: true,
-    result: { id, name, email: user.email, tempPhotoURL, token, role, active },
+    result: {
+      id,
+      name,
+      email: user.email,
+      tempPhotoURL,
+      token,
+      role,
+      authority,
+      active,
+    },
   });
 });
 

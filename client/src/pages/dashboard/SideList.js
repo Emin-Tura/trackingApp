@@ -30,6 +30,7 @@ import Users from "./users/Users";
 import Products from "./products/Products";
 import Calendar from "./calendar/Calendar";
 import Tasks from "./tasks/Tasks";
+import logo from "../../assets/logo1.png";
 
 const drawerWidth = 280;
 
@@ -181,6 +182,9 @@ const SideList = ({ open, setOpen }) => {
         <Box sx={{ textAlign: "center" }}>
           {open && <Typography>{currentUser?.name}</Typography>}
           <Typography variant="body2">{currentUser?.role || "role"}</Typography>
+          <Typography variant="body2">
+            {currentUser?.authority || "yetki"}
+          </Typography>
           {open && (
             <Typography variant="body2">{currentUser?.email}</Typography>
           )}
@@ -189,6 +193,25 @@ const SideList = ({ open, setOpen }) => {
               <Logout />
             </IconButton>
           </Tooltip>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "absolute",
+            bottom: 3,
+            left: "50%",
+            transform: "translateX(-50%)",
+          }}
+        >
+          <img src={logo} alt={"logo"} width="50" height="50" />
+          {open && (
+            <Typography variant="body">
+              Cypoint © Tüm Hakları Saklıdır
+            </Typography>
+          )}
         </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

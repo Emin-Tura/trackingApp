@@ -16,8 +16,12 @@ const UsersActions = ({ params, rowId, setRowId }) => {
   const handleSubmit = async () => {
     setLoading(true);
 
-    const { role, active, _id } = params.row;
-    const result = await updateStatus({ role, active }, _id, dispatch);
+    const { role, active, _id, authority } = params.row;
+    const result = await updateStatus(
+      { role, active, authority },
+      _id,
+      dispatch
+    );
     if (result) {
       setSuccess(true);
       setRowId(null);
@@ -30,9 +34,20 @@ const UsersActions = ({ params, rowId, setRowId }) => {
   }, [params.id, rowId, success]);
 
   const handleDelete = () => {
-    let text = "Kişiyi Silmek istediğinize emin misiniz?";
-    if (window.confirm(text)) {
-      deleteUser(params.row, currentUser, dispatch);
+    if (currentUser.authority === "Tam Yetki") {
+      let text = "Kişiyi Silmek istediğinize emin misiniz?";
+      if (window.confirm(text)) {
+        deleteUser(params.row, currentUser, dispatch);
+      }
+    } else {
+      dispatch({
+        type: "UPDATE_ALERT",
+        payload: {
+          open: true,
+          severity: "info",
+          message: "Bu işlem için yetkiniz yok!",
+        },
+      });
     }
   };
 

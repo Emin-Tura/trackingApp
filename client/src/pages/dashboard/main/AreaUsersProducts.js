@@ -28,7 +28,7 @@ for (let i = 0; i < months; i++) {
 
 export default function AreaUsersProducts() {
   const {
-    state: { users, products },
+    state: { users, products, tasks },
   } = useValue();
   const [data, setData] = React.useState([]);
 
@@ -60,6 +60,20 @@ export default function AreaUsersProducts() {
     setData([...tempData]);
   }, [users]);
 
+  useEffect(() => {
+    for (let i = 0; i < months; i++) {
+      tempData[i].tasks = 0;
+    }
+    tasks.forEach((task) => {
+      for (let i = 0; i < months; i++) {
+        if (moment(tempData[i].date).isSame(task?.createdAt, "month")) {
+          return tempData[i].tasks++;
+        }
+      }
+    });
+    setData([...tempData]);
+  }, [tasks]);
+
   return (
     <div style={{ width: "100%", height: 300, minWidth: 250 }}>
       <ResponsiveContainer>
@@ -75,6 +89,7 @@ export default function AreaUsersProducts() {
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
+
           <Area
             type="monotone"
             dataKey="products"
@@ -88,6 +103,13 @@ export default function AreaUsersProducts() {
             stackId="1"
             stroke="#82ca9d"
             fill="#82ca9d"
+          />
+          <Area
+            type="monotone"
+            dataKey="tasks"
+            stackId="1"
+            stroke="#17f9ff"
+            fill="#17f9ff"
           />
         </AreaChart>
       </ResponsiveContainer>

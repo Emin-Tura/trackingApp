@@ -1,6 +1,6 @@
 import React from "react";
 import { useValue } from "../../../context/ContextProvider";
-import { Paper, Box, Stack, Avatar, Tooltip, Container } from "@mui/material";
+import { Paper, Box, Stack, Avatar, Tooltip } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import moment from "moment";
 
@@ -40,8 +40,9 @@ const TasksList = () => {
                     "YYYY-MM-DD HH:MM:SS"
                   )} tarihinde oluşturuldu.`}
                 </Item>
-
-                <Avatar src={user.photoURL} />
+                <Tooltip title={user.email}>
+                  <Avatar src={user.photoURL} />
+                </Tooltip>
               </React.Fragment>
             ))}
           </Box>

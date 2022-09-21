@@ -8,7 +8,10 @@ import { getProducts } from "../../../actions/product";
 import Product from "./Product";
 
 const Products = ({ setSelectedLink, link }) => {
-  const { dispatch } = useValue();
+  const {
+    dispatch,
+    state: { currentUser },
+  } = useValue();
 
   useEffect(() => {
     setSelectedLink(link);
@@ -18,13 +21,15 @@ const Products = ({ setSelectedLink, link }) => {
 
   return (
     <Box>
-      <Button
-        variant="contained"
-        endIcon={<Add />}
-        onClick={() => dispatch({ type: "OPEN_LOGIN" })}
-      >
-        Ürün Oluştur
-      </Button>
+      {currentUser.authority !== "Yetki Yok" && (
+        <Button
+          variant="contained"
+          endIcon={<Add />}
+          onClick={() => dispatch({ type: "OPEN_LOGIN" })}
+        >
+          Ürün Oluştur
+        </Button>
+      )}
       <ProductsList />
       <AddProduct />
       <Product />
