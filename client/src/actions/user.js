@@ -35,8 +35,8 @@ export const updateStatus = (updatedFields, userId, dispatch) => {
 export const createUser = async (currentUser, updatedFields, dispatch) => {
   dispatch({ type: "START_LOADING" });
 
-  const { name, email, file } = updatedFields;
-  let body = { name, email };
+  const { name, email, password, file } = updatedFields;
+  let body = { name, email, password };
 
   try {
     if (file) {

@@ -1,4 +1,4 @@
-import { Close, Send } from "@mui/icons-material";
+import { Close, Send, Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Avatar,
   Button,
@@ -7,6 +7,7 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
+  InputAdornment,
   TextField,
 } from "@mui/material";
 import React, { useRef } from "react";
@@ -18,8 +19,18 @@ const CreateUser = () => {
     state: { profile, openLogin, currentUser },
     dispatch,
   } = useValue();
+
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClick = () => {
+    setShowPassword(!showPassword);
+  };
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+  };
+
   const nameRef = useRef();
   const emailRef = useRef();
+  const passwordRef = useRef();
 
   const handleClose = () => {
     dispatch({ type: "CLOSE_LOGIN" });
@@ -28,7 +39,12 @@ const CreateUser = () => {
     e.preventDefault();
     const email = emailRef.current.value;
     const name = nameRef.current.value;
-    createUser(currentUser, { name, email, file: profile.file }, dispatch);
+    const password = passwordRef.current.value;
+    createUser(
+      currentUser,
+      { name, email, password, file: profile.file },
+      dispatch
+    );
   };
 
   const handleChange = (e) => {
@@ -82,6 +98,30 @@ const CreateUser = () => {
             fullWidth
             inputRef={emailRef}
             required
+          />
+
+          <TextField
+            margin="dense"
+            variant="standard"
+            id={"password"}
+            label={"Parola"}
+            type={showPassword ? "text" : "password"}
+            fullWidth
+            inputRef={passwordRef}
+            inputProps={{ minLength: 5 }}
+            required
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={handleClick}
+                    onMouseDown={handleMouseDown}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
         </DialogContent>
         <DialogContent>

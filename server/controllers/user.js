@@ -63,7 +63,13 @@ export const updateStatus = tryCatch(async (req, res) => {
 });
 
 export const createUser = tryCatch(async (req, res) => {
-  const { name, email, photoURL } = req.body;
+  const { name, email, password, photoURL } = req.body;
+
+  if (password.length < 5)
+    return res.status(400).json({
+      success: false,
+      message: "Şifre 5 karakter veya daha fazla olmalıdır",
+    });
 
   const emailLowerCase = email.toLowerCase();
   const existedUser = await User.findOne({ email: emailLowerCase });
@@ -71,9 +77,12 @@ export const createUser = tryCatch(async (req, res) => {
     return res
       .status(400)
       .json({ success: false, message: "Kullanıcı Zaten Var!" });
+
+  const hashedPassword = await bcrypt.hash(password, 12);
   const user = await User.create({
     name,
     email: emailLowerCase,
+    password: hashedPassword,
     photoURL,
   });
   const { _id: id, photoURL: tempPhotoURL, role, authority, active } = user;
