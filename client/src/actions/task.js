@@ -25,3 +25,14 @@ export const getTasks = async (dispatch) => {
     dispatch({ type: "UPDATE_TASKS", payload: result });
   }
 };
+
+export const updateTask = (updateTask, taskId, dispatch) => {
+  return fetchData(
+    {
+      url: `${url}/updateTask/${taskId}`,
+      method: "PATCH",
+      body: updateTask,
+    },
+    dispatch
+  );
+};

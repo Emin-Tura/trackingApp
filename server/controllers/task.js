@@ -11,3 +11,8 @@ export const getTasks = tryCatch(async (req, res) => {
   const task = await Task.find().sort({ _id: -1 });
   res.status(200).json({ success: true, result: task });
 });
+export const updateTask = tryCatch(async (req, res) => {
+  const { completed } = req.body;
+  await Task.findByIdAndUpdate(req.params.taskId, { completed });
+  res.status(200).json({ success: true, result: { _id: req.params.taskId } });
+});
