@@ -36,3 +36,28 @@ export const updateTask = (updateTask, taskId, dispatch) => {
     dispatch
   );
 };
+
+export const deleteTask = async (taskId, dispatch) => {
+  dispatch({ type: "START_LOADING" });
+
+  const result = await fetchData(
+    {
+      url: `${url}/${taskId}`,
+      method: "DELETE",
+    },
+    dispatch
+  );
+  if (result) {
+    dispatch({
+      type: "UPDATE_ALERT",
+      payload: {
+        open: true,
+        severity: "success",
+        message: "Task Silindi",
+      },
+    });
+
+    dispatch({ type: "DELETE_TASK", payload: result._id });
+  }
+  dispatch({ type: "END_LOADING" });
+};

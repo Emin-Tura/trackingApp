@@ -72,7 +72,15 @@ const Product = () => {
           {product?.images?.map((url) => (
             <SwiperSlide key={url}>
               <div className="swiper-zoom-container">
-                <img src={url} alt="product" />
+                <img
+                  src={url}
+                  alt="product"
+                  style={{
+                    maxHeight: "400px",
+                    maxWidth: "500px",
+                    objectFit: "cover",
+                  }}
+                />
               </div>
             </SwiperSlide>
           ))}

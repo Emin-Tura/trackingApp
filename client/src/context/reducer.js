@@ -70,6 +70,12 @@ const reducer = (state, action) => {
         assigned: null,
       };
 
+    case "DELETE_TASK":
+      return {
+        ...state,
+        tasks: state.tasks.filter((task) => task !== action.payload),
+      };
+
     default:
       throw new Error("No matched action!");
   }

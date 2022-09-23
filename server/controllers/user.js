@@ -23,6 +23,7 @@ export const login = tryCatch(async (req, res) => {
 
   const {
     _id: id,
+    name,
     email: tempEmail,
     photoURL,
     role,
@@ -40,6 +41,7 @@ export const login = tryCatch(async (req, res) => {
   res.status(200).json({
     success: true,
     result: {
+      name,
       id,
       email: emailLowerCase,
       photoURL,
@@ -57,8 +59,13 @@ export const getUsers = tryCatch(async (req, res) => {
 });
 
 export const updateStatus = tryCatch(async (req, res) => {
-  const { role, authority, active } = req.body;
-  await User.findByIdAndUpdate(req.params.userId, { role, authority, active });
+  const { name, role, authority, active } = req.body;
+  await User.findByIdAndUpdate(req.params.userId, {
+    name,
+    role,
+    authority,
+    active,
+  });
   res.status(200).json({ success: true, result: { _id: req.params.userId } });
 });
 

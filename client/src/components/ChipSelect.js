@@ -44,7 +44,6 @@ const ChipSelect = () => {
     const {
       target: { value },
     } = event;
-
     setPersonName(typeof value === "string" ? value.split(",") : value);
     dispatch({ type: "SET_ASSIGNEE", payload: value });
   };

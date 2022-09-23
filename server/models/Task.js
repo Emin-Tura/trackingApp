@@ -6,6 +6,7 @@ const taskSchema = mongoose.Schema(
     assigned: { type: [String] },
     currentUser: { type: [] },
     completed: { type: Boolean, default: false },
+    email: { type: String },
   },
   { timestamps: true }
 );

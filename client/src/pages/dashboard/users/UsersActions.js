@@ -16,9 +16,9 @@ const UsersActions = ({ params, rowId, setRowId }) => {
   const handleSubmit = async () => {
     setLoading(true);
 
-    const { role, active, _id, authority } = params.row;
+    const { name, role, active, _id, authority } = params.row;
     const result = await updateStatus(
-      { role, active, authority },
+      { name, role, active, authority },
       _id,
       dispatch
     );

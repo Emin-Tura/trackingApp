@@ -20,7 +20,7 @@ import { getTasks } from "../../../actions/task";
 
 const Main = ({ setSelectedLink, link }) => {
   const {
-    state: { users, products, tasks },
+    state: { users, products, tasks, currentUser },
     dispatch,
   } = useValue();
   useEffect(() => {
@@ -113,6 +113,32 @@ const Main = ({ setSelectedLink, link }) => {
       </Paper>
       <Paper elevation={3} sx={{ p: 2, gridColumn: 3, gridRow: "1/4" }}>
         <Box>
+          <Typography>Son Eklenen Görevler</Typography>
+          <List>
+            {tasks.slice(0, 4).map((task, i) =>
+              task.assigned.filter((name) => name === currentUser.name)
+                .length || currentUser.authority === "Tam Yetki" ? (
+                <Box key={task?._id}>
+                  <ListItem>
+                    <ListItemAvatar>
+                      <AddTask fontSize="large" />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={task?.task}
+                      secondary={`Oluşturma Zamanı: ${moment(
+                        task?.createdAt
+                      ).format("YYYY-MM-DD H:mm:ss")}`}
+                    />
+                  </ListItem>
+                  {i !== 3 && <Divider variant="inset" />}
+                </Box>
+              ) : null
+            )}
+          </List>
+        </Box>
+        <Divider sx={{ mt: 3, mb: 3, opacity: 0.8 }} />
+
+        <Box>
           <Typography>Son Eklenen Çalışanlar</Typography>
           <List>
             {users.slice(0, 4).map((user, i) => (
@@ -125,29 +151,6 @@ const Main = ({ setSelectedLink, link }) => {
                     primary={user?.name}
                     secondary={`Oluşturma Zamanı: ${moment(
                       user?.createdAt
-                    ).format("YYYY-MM-DD H:mm:ss")}`}
-                  />
-                </ListItem>
-                {i !== 3 && <Divider variant="inset" />}
-              </Box>
-            ))}
-          </List>
-        </Box>
-        <Divider sx={{ mt: 3, mb: 3, opacity: 0.8 }} />
-
-        <Box>
-          <Typography>Son Eklenen Görevler</Typography>
-          <List>
-            {tasks.slice(0, 4).map((task, i) => (
-              <Box key={task?._id}>
-                <ListItem>
-                  <ListItemAvatar>
-                    <AddTask fontSize="large" />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={task?.task}
-                    secondary={`Oluşturma Zamanı: ${moment(
-                      task?.createdAt
                     ).format("YYYY-MM-DD H:mm:ss")}`}
                   />
                 </ListItem>
