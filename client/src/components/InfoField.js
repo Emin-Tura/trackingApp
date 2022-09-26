@@ -5,7 +5,7 @@ import pendingIcon from "./icons/progress1.svg";
 import { Check } from "@mui/icons-material";
 
 let timer;
-const InfoField = ({ mainProps, optionalProps = {}, minLength }) => {
+const InfoField = ({ mainProps, optionalProps = {}, minLength, required }) => {
   const { dispatch } = useValue();
   const [editing, setEditing] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -41,7 +41,7 @@ const InfoField = ({ mainProps, optionalProps = {}, minLength }) => {
       color={success ? "success" : "primary"}
       variant="outlined"
       onChange={handleChange}
-      required
+      required={required}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">

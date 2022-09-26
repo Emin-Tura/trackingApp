@@ -16,7 +16,7 @@ export const createProduct = async (product, dispatch) => {
         message: "Ürün Başarıyla Oluşturuldu",
       },
     });
-    dispatch({ type: "RESET_PRODUCT" });
+    dispatch({ type: "RESET_DETAIL" });
   }
   dispatch({ type: "END_LOADING" });
 };

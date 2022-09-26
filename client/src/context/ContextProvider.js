@@ -10,6 +10,7 @@ const initialState = {
   profile: { open: false, file: null, photoURL: "" },
   details: { title: "", description: "" },
   images: [],
+  file: [],
   products: [],
   product: null,
   tasks: [],

@@ -36,11 +36,12 @@ const reducer = (state, action) => {
         ...state,
         products: action.payload,
       };
-    case "RESET_PRODUCT":
+    case "RESET_DETAIL":
       return {
         ...state,
         images: [],
         details: { title: "", description: "" },
+        file: [],
       };
     case "DELETE_PRODUCT":
       return {

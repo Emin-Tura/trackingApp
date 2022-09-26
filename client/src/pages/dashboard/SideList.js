@@ -22,6 +22,7 @@ import {
   Store,
   CalendarMonth,
   Task,
+  DocumentScanner,
 } from "@mui/icons-material";
 import { useValue } from "../../context/ContextProvider";
 import { useNavigate, Routes, Route } from "react-router-dom";
@@ -31,6 +32,7 @@ import Products from "./products/Products";
 import Calendar from "./calendar/Calendar";
 import Tasks from "./tasks/Tasks";
 import logo from "../../assets/logo1.png";
+import Documents from "./documents/Documents";
 
 const drawerWidth = 280;
 
@@ -120,6 +122,12 @@ const SideList = ({ open, setOpen }) => {
         icon: <Task />,
         link: "tasks",
         component: <Tasks {...{ setSelectedLink, link: "tasks" }} />,
+      },
+      {
+        title: "Dokümanlar",
+        icon: <DocumentScanner />,
+        link: "documents",
+        component: <Documents {...{ setSelectedLink, link: "documents " }} />,
       },
     ],
     []

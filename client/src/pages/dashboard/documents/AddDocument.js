@@ -9,28 +9,27 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
-import { createProduct } from "../../../actions/product";
 import { useValue } from "../../../context/ContextProvider";
-import AddImages from "./addImages/AddImages";
 import InfoField from "../../../components/InfoField";
+import { createDocument } from "../../../actions/document";
 
 const AddProduct = () => {
   const {
     state: {
       openLogin,
       details: { title, description },
-      images,
+      file,
     },
     dispatch,
   } = useValue();
 
   const handleSubmit = () => {
-    const product = {
+    const document = {
       title,
       description,
-      images,
+      file,
     };
-    createProduct(product, dispatch);
+    createDocument(document, dispatch);
     dispatch({ type: "CLOSE_LOGIN" });
   };
 
@@ -54,7 +53,7 @@ const AddProduct = () => {
           }}
         >
           <DialogTitle>
-            Ürün Oluştur
+            Doküman Oluştur
             <IconButton
               sx={{
                 position: "absolute",
@@ -70,20 +69,24 @@ const AddProduct = () => {
           <DialogContent dividers sx={{ maxWidth: 500 }}>
             <Box>
               <InfoField
-                mainProps={{ name: "title", label: "Ürün Adı", value: title }}
-                minLength={5}
+                mainProps={{
+                  name: "title",
+                  label: "Doküman Adı",
+                  value: title,
+                }}
+                minLength={2}
+                required
               />
 
               <InfoField
                 mainProps={{
                   name: "description",
-                  label: "Ürün Özellikleri",
+                  label: "Doküman Özellikleri",
                   value: description,
                 }}
-                minLength={10}
+                minLength={2}
                 optionalProps={{ multiline: true, rows: 4 }}
               />
-              <AddImages />
             </Box>
           </DialogContent>
 
@@ -91,12 +94,9 @@ const AddProduct = () => {
             variant="contained"
             endIcon={<DownloadDone />}
             sx={{ my: 2 }}
-            disabled={
-              !(title.length > 4 && description.length > 9 && images.length > 0)
-            }
             onClick={handleSubmit}
           >
-            Kaydet
+            Oluştur
           </Button>
         </Stack>
       </Box>
