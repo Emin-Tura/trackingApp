@@ -9,7 +9,7 @@ const documentSchema = mongoose.Schema(
       maxLength: 1000,
     },
     file: {
-      type: [String],
+      type: String,
     },
   },
   { timestamps: true }

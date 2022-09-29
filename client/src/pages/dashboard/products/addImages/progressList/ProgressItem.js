@@ -3,8 +3,8 @@ import { useValue } from "../../../../../context/ContextProvider";
 import uploadFileProgress from "../../../../../firebase/uploadFileProgress";
 import { Box, ImageListItem } from "@mui/material";
 import { CheckCircleOutline } from "@mui/icons-material";
-import CircularProgressWithLabel from "./CircularProgressWithLabel";
-import { uuidv4 } from "@firebase/util";
+import CircularProgressWithLabel from "../../../../../components/CircularProgressWithLabel";
+import { v4 as uuidv4 } from "uuid";
 
 const ProgressItem = ({ file }) => {
   const [progress, setProgress] = useState(0);

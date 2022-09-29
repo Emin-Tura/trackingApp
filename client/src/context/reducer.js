@@ -43,6 +43,8 @@ const reducer = (state, action) => {
         details: { title: "", description: "" },
         file: [],
       };
+    case "UPDATE_FILES":
+      return { ...state, file: action.payload };
     case "DELETE_PRODUCT":
       return {
         ...state,

@@ -62,7 +62,7 @@ const AddProduct = () => {
                 right: 8,
                 color: (theme) => theme.palette.grey[500],
               }}
-              onClick={() => dispatch({ type: "CLOSE_LOGIN" })}
+              onClick={handleClose}
             >
               <Close />
             </IconButton>

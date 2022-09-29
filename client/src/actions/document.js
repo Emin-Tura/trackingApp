@@ -1,21 +1,32 @@
-import fetchData from "./utils/fetchData";
+import axios from "axios";
 
 const url = process.env.REACT_APP_SERVER_URL + "/document";
 
 export const createDocument = async (document, dispatch) => {
   dispatch({ type: "START_LOADING" });
-
-  const result = await fetchData({ url, body: document }, dispatch);
-  if (result) {
+  try {
+    const result = axios.post(url, document);
+    if (result) {
+      dispatch({
+        type: "UPDATE_ALERT",
+        payload: {
+          open: true,
+          severity: "success",
+          message: "Doküman Başarıyla Oluşturuldu",
+        },
+      });
+      dispatch({ type: "RESET_DETAIL" });
+    }
+  } catch {
     dispatch({
       type: "UPDATE_ALERT",
       payload: {
         open: true,
-        severity: "success",
-        message: "Doküman Başarıyla Oluşturuldu",
+        severity: "error",
+        message: "Doküman Oluşturulamadı",
       },
     });
-    dispatch({ type: "RESET_DETAIL" });
   }
+
   dispatch({ type: "END_LOADING" });
 };
