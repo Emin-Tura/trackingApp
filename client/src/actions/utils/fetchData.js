@@ -1,5 +1,5 @@
 const fetchData = async (
-  { url, method = "POST", token = "", body = null, file = null },
+  { url, method = "POST", token = "", body = null },
   dispatch
 ) => {
   const headers = token

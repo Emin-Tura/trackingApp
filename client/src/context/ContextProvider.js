@@ -11,6 +11,7 @@ const initialState = {
   details: { title: "", description: "" },
   images: [],
   file: [],
+  docs: [],
   products: [],
   product: null,
   tasks: [],

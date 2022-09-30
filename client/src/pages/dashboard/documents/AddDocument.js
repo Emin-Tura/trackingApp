@@ -18,7 +18,7 @@ const AddDocument = () => {
   const {
     state: {
       openLogin,
-      details: { title, description },
+      details: { title },
       file,
     },
     dispatch,
@@ -26,9 +26,7 @@ const AddDocument = () => {
 
   const document = new FormData();
   document.append("title", title);
-  document.append("description", description);
   document.append("file", file);
-  console.log(file);
 
   const handleSubmit = () => {
     createDocument(document, dispatch);
@@ -49,8 +47,8 @@ const AddDocument = () => {
     <Dialog open={openLogin} onClose={handleClose}>
       <Box
         sx={{
-          width: 600,
-          height: 600,
+          width: 400,
+          height: 400,
         }}
       >
         <Stack
@@ -84,22 +82,11 @@ const AddDocument = () => {
                 minLength={2}
                 required
               />
-
-              <InfoField
-                mainProps={{
-                  name: "description",
-                  label: "Doküman Özellikleri",
-                  value: description,
-                }}
-                minLength={2}
-                optionalProps={{ multiline: true, rows: 4 }}
-              />
             </Box>
             <TextField
               type={"file"}
               variant="outlined"
               onChange={handleChange}
-              accept="application/pdf,application/vnd.ms-excel"
             />
           </DialogContent>
 
@@ -108,7 +95,7 @@ const AddDocument = () => {
             endIcon={<DownloadDone />}
             sx={{ my: 2 }}
             onClick={handleSubmit}
-            disabled={!title || !description || file.length === 0}
+            disabled={!title || file.length === 0}
           >
             Oluştur
           </Button>

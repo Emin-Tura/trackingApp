@@ -36,15 +36,6 @@ const reducer = (state, action) => {
         ...state,
         products: action.payload,
       };
-    case "RESET_DETAIL":
-      return {
-        ...state,
-        images: [],
-        details: { title: "", description: "" },
-        file: [],
-      };
-    case "UPDATE_FILES":
-      return { ...state, file: action.payload };
     case "DELETE_PRODUCT":
       return {
         ...state,
@@ -56,6 +47,25 @@ const reducer = (state, action) => {
       return {
         ...state,
         product: action.payload,
+      };
+    case "RESET_DETAIL":
+      return {
+        ...state,
+        images: [],
+        details: { title: "", description: "" },
+        file: [],
+      };
+    case "UPDATE_FILES":
+      return { ...state, file: action.payload };
+    case "UPDATE_DOCS":
+      return {
+        ...state,
+        docs: action.payload,
+      };
+    case "DELETE_DOC":
+      return {
+        ...state,
+        docs: state.docs.filter((doc) => doc._id !== action.payload),
       };
     case "UPDATE_TASKS":
       return {
