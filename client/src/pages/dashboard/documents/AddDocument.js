@@ -9,7 +9,7 @@ import {
   TextField,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import React from "react";
+import React, { useState } from "react";
 import { useValue } from "../../../context/ContextProvider";
 import InfoField from "../../../components/InfoField";
 import { createDocument } from "../../../actions/document";
@@ -24,6 +24,7 @@ const AddDocument = () => {
     dispatch,
   } = useValue();
 
+  const [error, setError] = useState(false);
   const document = new FormData();
   document.append("title", title);
   document.append("file", file);
@@ -40,7 +41,25 @@ const AddDocument = () => {
   };
 
   const handleChange = (e) => {
-    dispatch({ type: "UPDATE_FILES", payload: e.target.files[0] });
+    if (
+      e.target.files[0].name.includes("(") ||
+      e.target.files[0].name.includes(")") ||
+      e.target.files[0].name.includes("[") ||
+      e.target.files[0].name.includes("]")
+    ) {
+      dispatch({
+        type: "UPDATE_ALERT",
+        payload: {
+          open: true,
+          severity: "error",
+          message: "Dosya Adı Geçersiz! Lütfen Özel Karakter Kullamayınız!",
+        },
+      });
+      setError(true);
+    } else {
+      setError(false);
+      dispatch({ type: "UPDATE_FILES", payload: e.target.files[0] });
+    }
   };
 
   return (
@@ -95,7 +114,7 @@ const AddDocument = () => {
             endIcon={<DownloadDone />}
             sx={{ my: 2 }}
             onClick={handleSubmit}
-            disabled={!title || file.length === 0}
+            disabled={!title || file.length === 0 || error}
           >
             Oluştur
           </Button>

@@ -89,6 +89,15 @@ export const downloadDocument = async (params, dispatch) => {
         },
       })
     )
-    .catch((err) => console.log(err));
+    .catch((err) =>
+      dispatch({
+        type: "UPDATE_ALERT",
+        payload: {
+          open: true,
+          severity: "error",
+          message: "Doküman İndirilemedi",
+        },
+      })
+    );
   dispatch({ type: "END_LOADING" });
 };
