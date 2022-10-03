@@ -45,7 +45,7 @@ const DocumentList = () => {
         },
       });
     }
-    downloadDocument(currentUser, params, dispatch);
+    downloadDocument(params, dispatch);
   };
 
   return (
@@ -79,23 +79,42 @@ const DocumentList = () => {
               />
               <img
                 src={require(`../../../assets/icon/${
-                  (file.file.split(".")[1] === "pdf" && "pdf.png") ||
-                  (file.file.split(".")[1] === ("docx" || "doc") &&
+                  (file.file.split(".").slice(-1)[0] === "pdf" && "pdf.png") ||
+                  (file.file.split(".").slice(-1)[0] === "docx" &&
                     "docx.png") ||
-                  (file.file.split(".")[1] === ("xlsx" || "xls") &&
+                  (file.file.split(".").slice(-1)[0] === "doc" && "docx.png") ||
+                  (file.file.split(".").slice(-1)[0] === "xlsx" &&
                     "xlsx.png") ||
-                  (file.file.split(".")[1] === ("pptx" || "ppt") &&
+                  (file.file.split(".").slice(-1)[0] === "xls" && "xlsx.png") ||
+                  (file.file.split(".").slice(-1)[0] === "pptx" &&
                     "pptx.png") ||
-                  (file.file.split(".")[1] ===
-                    ("txt" || "odt" || "ott" || "rtf" || "uot" || "dic") &&
-                    "txt.png") ||
-                  (file.file.split(".")[1] ===
-                    ("zip" || "rar" || "tar" || "7z") &&
+                  (file.file.split(".").slice(-1)[0] === "ppt" && "pptx.png") ||
+                  (file.file.split(".").slice(-1)[0] === "ppt" && "pptx.png") ||
+                  (file.file.split(".").slice(-1)[0] === "txt" && "txt.png") ||
+                  (file.file.split(".").slice(-1)[0] === "odt" && "txt.png") ||
+                  (file.file.split(".").slice(-1)[0] === "ott" && "txt.png") ||
+                  (file.file.split(".").slice(-1)[0] === "rtf" && "txt.png") ||
+                  (file.file.split(".").slice(-1)[0] === "uot" && "txt.png") ||
+                  (file.file.split(".").slice(-1)[0] === "dic" && "txt.png") ||
+                  (file.file.split(".").slice(-1)[0] === "zip" &&
                     "zip-file.png") ||
-                  (file.file.split(".")[1] === ("png" || "jpeg" || "psd") &&
+                  (file.file.split(".").slice(-1)[0] === "rar" &&
+                    "zip-file.png") ||
+                  (file.file.split(".").slice(-1)[0] === "tar" &&
+                    "zip-file.png") ||
+                  (file.file.split(".").slice(-1)[0] === "7z" &&
+                    "zip-file.png") ||
+                  (file.file.split(".").slice(-1)[0] === "png" &&
                     "jpg-png.png") ||
-                  (file.file.split(".")[1] === ("mp4" || "mkv") && "mp4.png") ||
-                  (file.file.split(".")[1] === "mp3" && "mp3.png")
+                  (file.file.split(".").slice(-1)[0] === "jpeg" &&
+                    "jpg-png.png") ||
+                  (file.file.split(".").slice(-1)[0] === "psd" &&
+                    "jpg-png.png") ||
+                  (file.file.split(".").slice(-1)[0] === "jpg" &&
+                    "jpg-png.png") ||
+                  (file.file.split(".").slice(-1)[0] === "mp4" && "mp4.png") ||
+                  (file.file.split(".").slice(-1)[0] === "mkv" && "mp4.png") ||
+                  (file.file.split(".").slice(-1)[0] === "mp3" && "mp3.png")
                 }`)}
                 alt="img"
                 style={{
@@ -110,6 +129,7 @@ const DocumentList = () => {
                   <IconButton
                     sx={{ color: "rgba(255, 255, 255, 0.54)" }}
                     onClick={() => handleDownload(file)}
+                    id="input"
                   >
                     <Download />
                   </IconButton>

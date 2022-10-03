@@ -1,6 +1,5 @@
 import tryCatch from "./utils/tryCatch.js";
 import Document from "../models/Document.js";
-import https from "https";
 
 export const createDocument = tryCatch(async (req, res) => {
   const { filename } = req.file;
@@ -18,11 +17,8 @@ export const deleteDocument = tryCatch(async (req, res) => {
 });
 
 export const downloadDocument = tryCatch(async (req, res) => {
-  const { _id } = await Document.findById(req.params.documentId);
-  if (!_id)
-    return res
-      .status(404)
-      .json({ success: false, message: "File does not exist." });
-  https.get(_id.secure_url, (fileStream) => fileStream.pipe(res));
-  res.status(200).json({ success: true, result: { _id } });
+  const document = await Document.find({
+    $or: [{ file: { $regex: req.params.download } }],
+  });
+  res.download(`../client/public/uploads/${document[0].file}`);
 });

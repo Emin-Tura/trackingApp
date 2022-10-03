@@ -127,7 +127,7 @@ const SideList = ({ open, setOpen }) => {
         title: "Dokümanlar",
         icon: <DocumentScanner />,
         link: "documents",
-        component: <Documents {...{ setSelectedLink, link: "documents " }} />,
+        component: <Documents {...{ setSelectedLink, link: "documents" }} />,
       },
     ],
     []

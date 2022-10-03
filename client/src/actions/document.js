@@ -67,27 +67,28 @@ export const deleteDocument = async (currentUser, params, dispatch) => {
   dispatch({ type: "END_LOADING" });
 };
 
-export const downloadDocument = async (currentUser, params, dispatch) => {
+export const downloadDocument = async (params, dispatch) => {
   dispatch({ type: "START_LOADING" });
-
-  const result = await fetchData(
-    {
-      url: `${url}/download/${params._id}`,
-      method: "GET",
-      token: currentUser?.token,
-    },
-    dispatch
-  );
-  if (result) {
-    dispatch({
-      type: "UPDATE_ALERT",
-      payload: {
-        open: true,
-        severity: "success",
-        message: "Doküman başarıyla indirildi.",
-      },
-    });
-  }
-
+  fetch(`${url}/${params.file}`)
+    .then((response) => {
+      response.blob().then((blob) => {
+        const fileURL = window.URL.createObjectURL(blob);
+        let alink = document.createElement("a");
+        alink.href = fileURL;
+        alink.download = params.title;
+        alink.click();
+      });
+    })
+    .then(
+      dispatch({
+        type: "UPDATE_ALERT",
+        payload: {
+          open: true,
+          severity: "success",
+          message: "Doküman Başarıyla İndirildi",
+        },
+      })
+    )
+    .catch((err) => console.log(err));
   dispatch({ type: "END_LOADING" });
 };

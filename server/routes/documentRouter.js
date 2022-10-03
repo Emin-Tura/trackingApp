@@ -38,7 +38,7 @@ const upload = multer({
 const documentRouter = Router();
 documentRouter.post("/", upload.single("file"), createDocument);
 documentRouter.get("/", getDocument);
-documentRouter.get("/:downloadId", downloadDocument);
+documentRouter.get("/:download", downloadDocument);
 documentRouter.delete("/:documentId", deleteDocument);
 
 export default documentRouter;

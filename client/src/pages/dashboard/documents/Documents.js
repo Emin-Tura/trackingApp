@@ -11,6 +11,7 @@ const Documents = ({ setSelectedLink, link }) => {
     dispatch,
     state: { currentUser },
   } = useValue();
+
   useEffect(() => {
     setSelectedLink(link);
     getDocument(dispatch);
