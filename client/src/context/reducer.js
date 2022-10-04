@@ -88,6 +88,11 @@ const reducer = (state, action) => {
         ...state,
         tasks: state.tasks.filter((task) => task !== action.payload),
       };
+    case "UPDATE_EVENTS":
+      return {
+        ...state,
+        events: action.payload,
+      };
 
     default:
       throw new Error("No matched action!");

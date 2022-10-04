@@ -15,6 +15,7 @@ const initialState = {
   products: [],
   product: null,
   tasks: [],
+  events: [],
   assigned: null,
 };
 

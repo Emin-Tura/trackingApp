@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import productRouter from "./routes/productRouter.js";
 import taskRouter from "./routes/taskRouter.js";
 import documentRouter from "./routes/documentRouter.js";
+import eventRouter from "./routes/eventRouter.js";
 
 dotenv.config();
 const port = process.env.PORT || 5000;
@@ -28,6 +29,7 @@ app.use("/user", userRouter);
 app.use("/product", productRouter);
 app.use("/task", taskRouter);
 app.use("/document", documentRouter);
+app.use("/event", eventRouter);
 
 app.get("/", (req, res) => res.json({ message: "Welcome to our API" }));
 app.use("/", (req, res) =>
