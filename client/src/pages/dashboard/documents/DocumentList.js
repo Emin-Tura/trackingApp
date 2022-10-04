@@ -77,6 +77,7 @@ const DocumentList = () => {
                   </IconButton>
                 }
               />
+
               <img
                 src={require(`../../../assets/icon/${
                   (file.file.split(".").slice(-1)[0] === "pdf" && "pdf.png") ||
@@ -114,7 +115,8 @@ const DocumentList = () => {
                     "jpg-png.png") ||
                   (file.file.split(".").slice(-1)[0] === "mp4" && "mp4.png") ||
                   (file.file.split(".").slice(-1)[0] === "mkv" && "mp4.png") ||
-                  (file.file.split(".").slice(-1)[0] === "mp3" && "mp3.png")
+                  (file.file.split(".").slice(-1)[0] === "mp3" && "mp3.png") ||
+                  (file.file.split(".").slice(-1)[0] === "html" && "html.png")
                 }`)}
                 alt="img"
                 style={{
@@ -125,6 +127,7 @@ const DocumentList = () => {
                 }}
               />
               <ImageListItemBar
+                subtitle={file.title}
                 actionIcon={
                   <IconButton
                     sx={{ color: "rgba(255, 255, 255, 0.54)" }}
