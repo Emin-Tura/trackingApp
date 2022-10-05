@@ -1,8 +1,24 @@
-import React, { useEffect } from "react";
-import { Scheduler } from "@aldabil/react-scheduler";
-import { EVENTS } from "./events";
+import React, { useEffect, useState } from "react";
 import { createEvent, getEvents } from "../../../actions/event";
 import { useValue } from "../../../context/ContextProvider";
+import Paper from "@mui/material/Paper";
+import { ViewState, EditingState } from "@devexpress/dx-react-scheduler";
+import {
+  Scheduler,
+  Appointments,
+  AppointmentForm,
+  AppointmentTooltip,
+  WeekView,
+  EditRecurrenceMenu,
+  AllDayPanel,
+  ConfirmationDialog,
+  Toolbar,
+  DateNavigator,
+  ViewSwitcher,
+  MonthView,
+  DayView,
+} from "@devexpress/dx-react-scheduler-material-ui";
+// import { appointments } from "./appointments";
 
 const Calendar = ({ setSelectedLink, link }) => {
   const {
@@ -13,74 +29,101 @@ const Calendar = ({ setSelectedLink, link }) => {
   useEffect(() => {
     setSelectedLink(link);
     getEvents(dispatch);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(events);
-  const handleConfirm = async (event, action) => {
-    // console.log(event, action);
-    const { end, start, title } = event;
-    const newEvent = {
-      end,
-      start,
-      title,
-      event_id: Math.round(Math.random() * 1000),
-    };
-    if (action === "edit") {
-      /** PUT event to remote DB */
-    } else if (action === "create") {
-      /**POST event to remote DB */
-      createEvent(newEvent, dispatch);
-    }
-    /**
-     * Make sure to return 4 mandatory fields:
-     * event_id: string|number
-     * title: string
-     * start: Date|string
-     * end: Date|string
-     * ....extra other fields depend on your custom fields/editor properties
-     */
-    // Simulate http request: return added/edited event
-    return new Promise((res, rej) => {
-      setTimeout(() => {
-        res({
-          ...event,
-          event_id: event.event_id || Math.random(),
-        });
-      }, 3000);
-    });
-  };
+  // const [data, setData] = useState(events);
+  // const [currentDate, setCurrentDate] = useState(Date.now());
+  // const [addedAppointment, setAddedAppointment] = useState({});
+  // const [appointmentChanges, setAppointmentChanges] = useState({});
+  // const [editingAppointment, setEditingAppointment] = useState(undefined);
+  const [currentViewName, setCurrentViewName] = useState();
 
-  const handleDelete = async (deletedId) => {
-    // Simulate http request: return the deleted id
-    return new Promise((res, rej) => {
-      setTimeout(() => {
-        res(deletedId);
-      }, 3000);
-    });
+  const commitChanges = ({ added, changed, deleted }) => {
+    if (added) {
+      createEvent(added, dispatch);
+    }
+    if (changed) {
+      const { ...rest } = changed;
+      console.log(rest);
+      // data.map((appointment) => console.log(appointment.id));
+    }
+    if (deleted !== undefined) {
+    }
   };
 
   return (
-    <Scheduler
-      week={{
-        weekDays: [0, 1, 2, 3, 4, 5],
-        weekStartOn: 6,
-        startHour: 8,
-        endHour: 18,
-        step: 60,
-      }}
-      view="week"
-      events={EVENTS}
-      selectedDate={new Date()}
-      onDelete={handleDelete}
-      day={{
-        startHour: 8,
-        endHour: 18,
-        step: 60,
-      }}
-      onConfirm={handleConfirm}
-    />
+    <Paper>
+      <Scheduler data={events} height={600} locale={"tr-TR"}>
+        <ViewState
+          defaultCurrentDate={Date.now()}
+          currentViewName={currentViewName}
+          onCurrentViewNameChange={setCurrentViewName}
+        />
+        <EditingState
+          onCommitChanges={commitChanges}
+          // addedAppointment={addedAppointment}
+          // onAddedAppointmentChange={setAddedAppointment}
+          // appointmentChanges={appointmentChanges}
+          // onAppointmentChangesChange={setAppointmentChanges}
+          // editingAppointment={editingAppointment}
+          // onEditingAppointmentChange={setEditingAppointment}
+        />
+        <WeekView startDayHour={8} endDayHour={18} displayName="Hafta" />
+        <MonthView displayName="Ay" />
+        <DayView displayName="Gün" />
+        <AllDayPanel messages={{ allDay: "Tüm Gün" }} />
+        <Toolbar />
+        <ViewSwitcher />
+        <DateNavigator />
+        <EditRecurrenceMenu />
+        <ConfirmationDialog />
+        <Appointments />
+        <AppointmentTooltip showCloseButton />
+        <ConfirmationDialog
+          messages={{
+            cancelButton: "İptal",
+            discardButton: "Sil",
+            confirmCancelMessage: "Kaydedilmemiş değişiklikler silinsin mi?",
+            confirmDeleteMessage: "Olay silinsin mi?",
+            deleteButton: "Sil",
+          }}
+        />
+        <AppointmentForm
+          messages={{
+            detailsLabel: "Detay",
+            allDayLabel: "Tüm Gün",
+            titleLabel: "Başlık",
+            commitCommand: "Kaydet",
+            moreInformationLabel: "Daha Fazla Bilgi",
+            repeatLabel: "Tekrar",
+            notesLabel: "Notlar",
+            never: "Asla",
+            daily: "Günlük",
+            weekly: "Haftalık",
+            monthly: "Aylık",
+            yearly: "Yıllık",
+            repeatEveryLabel: "Her Birini Tekrarla",
+            daysLabel: "Günler",
+            endRepeatLabel: "Tekrarlamayı Sonlandır",
+            onLabel: "Açık",
+            afterLabel: "Sonra",
+            occurrencesLabel: "Olaylar",
+            weeksOnLabel: "Haftalar",
+            monthsLabel: "Aylar",
+            ofEveryMonthLabel: "Her ayın",
+            theLabel: "Bu",
+            firstLabel: "İlk",
+            secondLabel: "İkinci",
+            thirdLabel: "Üçüncü",
+            fourthLabel: "Dördüncü",
+            lastLabel: "Son",
+            yearsLabel: "Yıllar",
+            everyLabel: "Her",
+          }}
+        />
+      </Scheduler>
+    </Paper>
   );
 };
 
