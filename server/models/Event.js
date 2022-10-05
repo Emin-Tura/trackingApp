@@ -2,10 +2,13 @@ import mongoose from "mongoose";
 
 const eventSchema = mongoose.Schema(
   {
-    event_id: { type: Number },
-    end: { type: Date },
-    start: { type: Date },
-    title: { type: String, max: 250, required: true },
+    id: { type: Number },
+    allDay: { type: Boolean },
+    rRule: { type: String },
+    endDate: { type: Date },
+    startDate: { type: Date },
+    title: { type: String },
+    notes: { type: String },
   },
   { timestamps: true }
 );
