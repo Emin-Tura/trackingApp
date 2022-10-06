@@ -11,8 +11,9 @@ const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
   display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "flex-start",
   textAlign: "left",
   color: theme.palette.text.secondary,
   width: "75%",
@@ -112,8 +113,24 @@ const TasksList = () => {
                     task.completed ? "line-through" : "none"
                   }`,
                   color: `${task.completed ? "#696969" : "none"}`,
+                  backgroundColor: `${
+                    task.assigned.filter((name) => name === currentUser.name)
+                      .length &&
+                    currentUser.authority === "Tam Yetki" &&
+                    "rgba(103,128,159,.4)"
+                  }`,
+                  overflow: "auto",
                 }}
-              >{`@${task.assigned} : ${task.task}`}</Item>
+              >
+                <span
+                  style={{
+                    color: `${task.completed ? "#696969" : "#48cae4"}`,
+                  }}
+                >
+                  {`@${task.assigned} :`}
+                </span>
+                <span>{task.task}</span>
+              </Item>
               {task.currentUser.map((user) => (
                 <React.Fragment key={user.id}>
                   <Item
@@ -124,6 +141,13 @@ const TasksList = () => {
                         task.completed ? "line-through" : "none"
                       }`,
                       color: `${task.completed ? "#696969" : "none"}`,
+                      backgroundColor: `${
+                        task.assigned.filter(
+                          (name) => name === currentUser.name
+                        ).length &&
+                        currentUser.authority === "Tam Yetki" &&
+                        "rgba(103,128,159,.4)"
+                      }`,
                     }}
                   >
                     {`Görev ${

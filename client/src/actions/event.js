@@ -25,3 +25,28 @@ export const getEvents = async (dispatch) => {
     dispatch({ type: "UPDATE_EVENTS", payload: result });
   }
 };
+
+export const deleteEvent = async (eventId, dispatch) => {
+  dispatch({ type: "START_LOADING" });
+
+  const result = await fetchData(
+    {
+      url: `${url}/${eventId}`,
+      method: "DELETE",
+    },
+    dispatch
+  );
+  if (result) {
+    dispatch({
+      type: "UPDATE_ALERT",
+      payload: {
+        open: true,
+        severity: "success",
+        message: "Olay Silindi",
+      },
+    });
+
+    dispatch({ type: "DELETE_EVENT", payload: result._id });
+  }
+  dispatch({ type: "END_LOADING" });
+};

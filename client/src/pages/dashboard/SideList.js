@@ -183,18 +183,22 @@ const SideList = ({ open, setOpen }) => {
           <Tooltip title={currentUser?.name || ""}>
             <Avatar
               src={currentUser?.photoURL}
-              {...(open && { sx: { width: 100, height: 100 } })}
+              {...(open && { sx: { width: 75, height: 75 } })}
             />
           </Tooltip>
         </Box>
         <Box sx={{ textAlign: "center" }}>
-          {open && <Typography>{currentUser?.name}</Typography>}
-          <Typography variant="body2">{currentUser?.role || "role"}</Typography>
-          <Typography variant="body2">
-            {currentUser?.authority || "yetki"}
-          </Typography>
           {open && (
-            <Typography variant="body2">{currentUser?.email}</Typography>
+            <>
+              <Typography>{currentUser?.name}</Typography>
+              <Typography variant="body2">
+                {currentUser?.role || "role"}
+              </Typography>
+              <Typography variant="body2">
+                {currentUser?.authority || "yetki"}
+              </Typography>
+              <Typography variant="body2">{currentUser?.email}</Typography>
+            </>
           )}
           <Tooltip title="Çıkış" sx={{ mt: 1 }}>
             <IconButton onClick={handleLogout}>

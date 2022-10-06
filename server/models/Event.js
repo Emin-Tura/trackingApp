@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const eventSchema = mongoose.Schema(
   {
-    id: { type: Number },
+    id: { type: String },
     allDay: { type: Boolean },
     rRule: { type: String },
     endDate: { type: Date },

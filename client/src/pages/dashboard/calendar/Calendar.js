@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { createEvent, getEvents } from "../../../actions/event";
+import { createEvent, deleteEvent, getEvents } from "../../../actions/event";
 import { useValue } from "../../../context/ContextProvider";
 import Paper from "@mui/material/Paper";
 import { ViewState, EditingState } from "@devexpress/dx-react-scheduler";
@@ -18,7 +18,8 @@ import {
   MonthView,
   DayView,
 } from "@devexpress/dx-react-scheduler-material-ui";
-// import { appointments } from "./appointments";
+
+import { v4 as uuidv4 } from "uuid";
 
 const Calendar = ({ setSelectedLink, link }) => {
   const {
@@ -29,8 +30,7 @@ const Calendar = ({ setSelectedLink, link }) => {
   useEffect(() => {
     setSelectedLink(link);
     getEvents(dispatch);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, link, setSelectedLink]);
 
   // const [data, setData] = useState(events);
   // const [currentDate, setCurrentDate] = useState(Date.now());
@@ -38,17 +38,19 @@ const Calendar = ({ setSelectedLink, link }) => {
   // const [appointmentChanges, setAppointmentChanges] = useState({});
   // const [editingAppointment, setEditingAppointment] = useState(undefined);
   const [currentViewName, setCurrentViewName] = useState();
+  let [id, setId] = useState(uuidv4());
 
   const commitChanges = ({ added, changed, deleted }) => {
+    setId(uuidv4());
     if (added) {
-      createEvent(added, dispatch);
+      createEvent({ added, id }, dispatch);
     }
     if (changed) {
-      const { ...rest } = changed;
-      console.log(rest);
-      // data.map((appointment) => console.log(appointment.id));
+      console.log("changed :", changed);
+      // events.map((appointment) => console.log(appointment._id));
     }
     if (deleted !== undefined) {
+      deleteEvent(deleted, dispatch);
     }
   };
 
@@ -62,7 +64,7 @@ const Calendar = ({ setSelectedLink, link }) => {
         />
         <EditingState
           onCommitChanges={commitChanges}
-          // addedAppointment={addedAppointment}
+          // addedAppointment={(e) => console.log(e)}
           // onAddedAppointmentChange={setAddedAppointment}
           // appointmentChanges={appointmentChanges}
           // onAppointmentChangesChange={setAppointmentChanges}
@@ -79,10 +81,10 @@ const Calendar = ({ setSelectedLink, link }) => {
         <EditRecurrenceMenu />
         <ConfirmationDialog />
         <Appointments />
-        <AppointmentTooltip showCloseButton />
+        <AppointmentTooltip showDeleteButton showOpenButton showCloseButton />
         <ConfirmationDialog
           messages={{
-            cancelButton: "İptal",
+            cancelButton: "Iptal",
             discardButton: "Sil",
             confirmCancelMessage: "Kaydedilmemiş değişiklikler silinsin mi?",
             confirmDeleteMessage: "Olay silinsin mi?",

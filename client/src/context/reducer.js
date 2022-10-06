@@ -88,6 +88,12 @@ const reducer = (state, action) => {
         ...state,
         tasks: state.tasks.filter((task) => task !== action.payload),
       };
+
+    case "DELETE_EVENT":
+      return {
+        ...state,
+        events: state.events.filter((event) => event !== action.payload),
+      };
     case "UPDATE_EVENTS":
       return {
         ...state,
