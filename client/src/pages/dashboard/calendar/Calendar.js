@@ -40,9 +40,8 @@ const Calendar = ({ setSelectedLink, link }) => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const commitChanges = useCallback(({ added, changed, deleted }) => {
-    setId(uuidv4());
-
     if (added) {
+      setId(uuidv4());
       createEvent({ added, id }, dispatch);
     }
     if (changed) {

@@ -20,6 +20,7 @@ export const deleteEvent = tryCatch(async (req, res) => {
 });
 
 export const updateEvent = tryCatch(async (req, res) => {
-  await Event.findOneAndUpdate(req.params.eventId, { ...req.body });
+  const { eventId } = req.params;
+  await Event.findOneAndUpdate({ id: eventId }, { ...req.body });
   res.status(200).json({ success: true, result: { id: req.params.eventId } });
 });
