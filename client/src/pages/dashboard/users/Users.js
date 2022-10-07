@@ -27,7 +27,11 @@ const Users = ({ setSelectedLink, link }) => {
         field: "photoURL",
         headerName: "Resim",
         width: 70,
-        renderCell: (params) => <Avatar src={params.row.photoURL} />,
+        renderCell: (params) => (
+          <Avatar src={params.row.photoURL} alt={params.row.name}>
+            {params.row.name?.charAt(0).toUpperCase()}
+          </Avatar>
+        ),
         sortable: false,
         filterable: false,
       },

@@ -6,6 +6,7 @@ const documentSchema = mongoose.Schema(
     file: {
       type: String,
     },
+    user: { type: String },
   },
   { timestamps: true }
 );

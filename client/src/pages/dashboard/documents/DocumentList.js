@@ -1,4 +1,4 @@
-import { Clear, Download } from "@mui/icons-material";
+import { Clear, Download, Info } from "@mui/icons-material";
 import {
   Box,
   Card,
@@ -6,6 +6,7 @@ import {
   ImageList,
   ImageListItem,
   ImageListItemBar,
+  Tooltip,
 } from "@mui/material";
 import React from "react";
 import { deleteDocument, downloadDocument } from "../../../actions/document";
@@ -81,43 +82,82 @@ const DocumentList = () => {
               <img
                 src={require(`../../../assets/icon/${
                   (file.file.split(".").slice(-1)[0] === "pdf" && "pdf.png") ||
+                  (file.file.split(".").slice(-1)[0] === "PDF" && "pdf.png") ||
                   (file.file.split(".").slice(-1)[0] === "docx" &&
                     "docx.png") ||
+                  (file.file.split(".").slice(-1)[0] === "DOCX" &&
+                    "docx.png") ||
                   (file.file.split(".").slice(-1)[0] === "doc" && "doc.png") ||
+                  (file.file.split(".").slice(-1)[0] === "DOC" && "doc.png") ||
                   (file.file.split(".").slice(-1)[0] === "xlsx" &&
                     "xlsx.png") ||
+                  (file.file.split(".").slice(-1)[0] === "XLSX" &&
+                    "xlsx.png") ||
                   (file.file.split(".").slice(-1)[0] === "xls" && "xls.png") ||
+                  (file.file.split(".").slice(-1)[0] === "XLS" && "xls.png") ||
                   (file.file.split(".").slice(-1)[0] === "pptx" &&
                     "pptx.png") ||
+                  (file.file.split(".").slice(-1)[0] === "PPTX" &&
+                    "pptx.png") ||
                   (file.file.split(".").slice(-1)[0] === "ppt" && "ppt.png") ||
+                  (file.file.split(".").slice(-1)[0] === "PPT" && "ppt.png") ||
                   (file.file.split(".").slice(-1)[0] === "txt" && "txt.png") ||
+                  (file.file.split(".").slice(-1)[0] === "TXT" && "txt.png") ||
                   (file.file.split(".").slice(-1)[0] === "odt" && "txt.png") ||
+                  (file.file.split(".").slice(-1)[0] === "ODT" && "txt.png") ||
                   (file.file.split(".").slice(-1)[0] === "ott" && "txt.png") ||
+                  (file.file.split(".").slice(-1)[0] === "OTT" && "txt.png") ||
                   (file.file.split(".").slice(-1)[0] === "rtf" && "txt.png") ||
+                  (file.file.split(".").slice(-1)[0] === "RTF" && "txt.png") ||
                   (file.file.split(".").slice(-1)[0] === "uot" && "txt.png") ||
+                  (file.file.split(".").slice(-1)[0] === "UOT" && "txt.png") ||
                   (file.file.split(".").slice(-1)[0] === "dic" && "txt.png") ||
+                  (file.file.split(".").slice(-1)[0] === "DIC" && "txt.png") ||
                   (file.file.split(".").slice(-1)[0] === "zip" &&
+                    "zip-file.png") ||
+                  (file.file.split(".").slice(-1)[0] === "ZIP" &&
                     "zip-file.png") ||
                   (file.file.split(".").slice(-1)[0] === "rar" &&
                     "zip-file.png") ||
+                  (file.file.split(".").slice(-1)[0] === "RAR" &&
+                    "zip-file.png") ||
                   (file.file.split(".").slice(-1)[0] === "tar" &&
+                    "zip-file.png") ||
+                  (file.file.split(".").slice(-1)[0] === "TAR" &&
                     "zip-file.png") ||
                   (file.file.split(".").slice(-1)[0] === "7z" &&
                     "zip-file.png") ||
+                  (file.file.split(".").slice(-1)[0] === "7Z" &&
+                    "zip-file.png") ||
                   (file.file.split(".").slice(-1)[0] === "png" &&
+                    "jpg-png.png") ||
+                  (file.file.split(".").slice(-1)[0] === "PNG" &&
                     "jpg-png.png") ||
                   (file.file.split(".").slice(-1)[0] === "jpeg" &&
                     "jpg-png.png") ||
+                  (file.file.split(".").slice(-1)[0] === "JPEG" &&
+                    "jpg-png.png") ||
                   (file.file.split(".").slice(-1)[0] === "psd" &&
+                    "jpg-png.png") ||
+                  (file.file.split(".").slice(-1)[0] === "PSD" &&
                     "jpg-png.png") ||
                   (file.file.split(".").slice(-1)[0] === "jpg" &&
                     "jpg-png.png") ||
+                  (file.file.split(".").slice(-1)[0] === "JPG" &&
+                    "jpg-png.png") ||
                   (file.file.split(".").slice(-1)[0] === "mp4" && "mp4.png") ||
+                  (file.file.split(".").slice(-1)[0] === "MP4" && "mp4.png") ||
                   (file.file.split(".").slice(-1)[0] === "mkv" && "mp4.png") ||
+                  (file.file.split(".").slice(-1)[0] === "MKV" && "mp4.png") ||
                   (file.file.split(".").slice(-1)[0] === "mp3" && "mp3.png") ||
+                  (file.file.split(".").slice(-1)[0] === "MP3" && "mp3.png") ||
                   (file.file.split(".").slice(-1)[0] === "html" &&
                     "html.png") ||
+                  (file.file.split(".").slice(-1)[0] === "HTML" &&
+                    "html.png") ||
                   (file.file.split(".").slice(-1)[0] === "crt" &&
+                    "certificate.png") ||
+                  (file.file.split(".").slice(-1)[0] === "CRT" &&
                     "certificate.png")
                 }`)}
                 alt="img"
@@ -129,7 +169,20 @@ const DocumentList = () => {
                 }}
               />
               <ImageListItemBar
-                subtitle={file.title}
+                subtitle={
+                  <Tooltip
+                    title={`Bu doküman ${file.user} tarafından yüklenmiştir.`}
+                    sx={{
+                      color: "rgba(255, 255, 255, 0.54)",
+                    }}
+                  >
+                    <Info
+                      sx={{
+                        color: "#696969",
+                      }}
+                    />
+                  </Tooltip>
+                }
                 actionIcon={
                   <IconButton
                     sx={{ color: "rgba(255, 255, 255, 0.54)" }}

@@ -145,7 +145,9 @@ const Main = ({ setSelectedLink, link }) => {
               <Box key={user._id}>
                 <ListItem>
                   <ListItemAvatar>
-                    <Avatar alt={user?.name} src={user?.photoURL} />
+                    <Avatar alt={user?.name} src={user?.photoURL}>
+                      {user.name.charAt(0).toUpperCase()}
+                    </Avatar>
                   </ListItemAvatar>
                   <ListItemText
                     primary={user?.name}

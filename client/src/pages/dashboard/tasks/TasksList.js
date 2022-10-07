@@ -150,15 +150,15 @@ const TasksList = () => {
                       }`,
                     }}
                   >
-                    {`Görev ${
-                      user.id === task._id ? "siz" : task.currentUser[0].name
-                    }
+                    {`Görev ${task.currentUser[0].name}
                   tarafından ${moment(task.createdAt).format(
                     "YYYY-MM-DD HH:MM:SS"
                   )} tarihinde oluşturuldu.`}
                   </Item>
-                  <Tooltip title={user.email}>
-                    <Avatar src={user.photoURL} />
+                  <Tooltip title={user?.email}>
+                    <Avatar src={user?.photoURL} alt={user?.name}>
+                      {user?.name?.charAt(0).toUpperCase()}
+                    </Avatar>
                   </Tooltip>
                   {task.completed && (
                     <Tooltip

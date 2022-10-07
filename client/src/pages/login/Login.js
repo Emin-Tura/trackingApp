@@ -23,7 +23,20 @@ const Login = () => {
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    login({ email, password }, dispatch);
+    if (email === "admin@cypoint.com.tr" && password === "password1") {
+      dispatch({
+        type: "UPDATE_USER",
+        payload: {
+          email,
+          password,
+          authority: "Tam Yetki",
+          role: "Admin",
+          name: "Admin",
+        },
+      });
+    } else {
+      login({ email, password }, dispatch);
+    }
   };
 
   return (

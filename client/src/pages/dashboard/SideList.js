@@ -191,8 +191,11 @@ const SideList = ({ open, setOpen }) => {
           <Tooltip title={currentUser?.name || ""}>
             <Avatar
               src={currentUser?.photoURL}
+              alt={currentUser?.name}
               {...(open && { sx: { width: 50, height: 50 } })}
-            />
+            >
+              {currentUser?.name?.charAt(0).toUpperCase()}
+            </Avatar>
           </Tooltip>
         </Box>
         <Box sx={{ textAlign: "center" }}>

@@ -90,7 +90,7 @@ const Calendar = ({ setSelectedLink, link }) => {
           <Toolbar />
           <ViewSwitcher />
           <DateNavigator />
-          <EditRecurrenceMenu />
+          <EditRecurrenceMenu messages={locale === "tr-TR" && messages.tr} />
           <ConfirmationDialog />
           <Appointments />
           <AppointmentTooltip
@@ -103,6 +103,7 @@ const Calendar = ({ setSelectedLink, link }) => {
             showCloseButton
           />
           <ConfirmationDialog messages={locale === "tr-TR" && messages.tr} />
+
           <AppointmentForm
             messages={locale === "tr-TR" && messages.tr}
             readOnly={currentUser.authority !== "Yetki Yok" ? false : true}

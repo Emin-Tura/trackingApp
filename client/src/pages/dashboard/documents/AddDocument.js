@@ -20,6 +20,7 @@ const AddDocument = () => {
       openLogin,
       details: { title },
       file,
+      currentUser,
     },
     dispatch,
   } = useValue();
@@ -30,6 +31,7 @@ const AddDocument = () => {
   const document = new FormData();
   document.append("title", title);
   document.append("file", file);
+  document.append("user", currentUser.name);
 
   const handleSubmit = () => {
     createDocument(document, dispatch);

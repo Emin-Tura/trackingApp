@@ -34,6 +34,12 @@ const messages = {
     confirmCancelMessage: "Kaydedilmemiş değişiklikler silinsin mi?",
     confirmDeleteMessage: "Olay silinsin mi?",
     deleteButton: "Sil",
+    menuEditingTitle: "Yinelenen olayı düzenle",
+    current: "Bu randevu",
+    currentAndFollowing: "Bu ve sonraki olaylar",
+    all: "Tüm olaylar",
+    menuDeletingTitle: "Yinelenen olayı sil",
+    commitButton: "Kaydet",
   },
 };
 
