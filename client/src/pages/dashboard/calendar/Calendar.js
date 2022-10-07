@@ -1,5 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { createEvent, deleteEvent, getEvents } from "../../../actions/event";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  createEvent,
+  deleteEvent,
+  getEvents,
+  updateEvent,
+} from "../../../actions/event";
 import { useValue } from "../../../context/ContextProvider";
 import Paper from "@mui/material/Paper";
 import { ViewState, EditingState } from "@devexpress/dx-react-scheduler";
@@ -17,115 +22,96 @@ import {
   ViewSwitcher,
   MonthView,
   DayView,
+  DragDropProvider,
 } from "@devexpress/dx-react-scheduler-material-ui";
-
+import messages from "../../../components/language";
 import { v4 as uuidv4 } from "uuid";
 
 const Calendar = ({ setSelectedLink, link }) => {
   const {
-    state: { events },
+    state: { events, currentUser },
     dispatch,
   } = useValue();
 
-  useEffect(() => {
-    setSelectedLink(link);
-    getEvents(dispatch);
-  }, [dispatch, link, setSelectedLink]);
-
-  // const [data, setData] = useState(events);
-  // const [currentDate, setCurrentDate] = useState(Date.now());
-  // const [addedAppointment, setAddedAppointment] = useState({});
-  // const [appointmentChanges, setAppointmentChanges] = useState({});
-  // const [editingAppointment, setEditingAppointment] = useState(undefined);
+  const [id, setId] = useState(uuidv4());
+  const [currentDate, setCurrentDate] = useState(Date.now());
   const [currentViewName, setCurrentViewName] = useState();
-  let [id, setId] = useState(uuidv4());
+  const [locale] = useState("tr-TR");
 
-  const commitChanges = ({ added, changed, deleted }) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const commitChanges = useCallback(({ added, changed, deleted }) => {
     setId(uuidv4());
+
     if (added) {
       createEvent({ added, id }, dispatch);
     }
     if (changed) {
-      console.log("changed :", changed);
-      // events.map((appointment) => console.log(appointment._id));
+      events.map(
+        (appointment) =>
+          changed[appointment.id] &&
+          updateEvent(changed[appointment.id], appointment.id, dispatch)
+      );
     }
     if (deleted !== undefined) {
       deleteEvent(deleted, dispatch);
     }
-  };
+  });
+
+  useEffect(() => {
+    setSelectedLink(link);
+    getEvents(dispatch);
+  }, [dispatch, link, setSelectedLink, commitChanges]);
 
   return (
-    <Paper>
-      <Scheduler data={events} height={600} locale={"tr-TR"}>
-        <ViewState
-          defaultCurrentDate={Date.now()}
-          currentViewName={currentViewName}
-          onCurrentViewNameChange={setCurrentViewName}
-        />
-        <EditingState
-          onCommitChanges={commitChanges}
-          // addedAppointment={(e) => console.log(e)}
-          // onAddedAppointmentChange={setAddedAppointment}
-          // appointmentChanges={appointmentChanges}
-          // onAppointmentChangesChange={setAppointmentChanges}
-          // editingAppointment={editingAppointment}
-          // onEditingAppointmentChange={setEditingAppointment}
-        />
-        <WeekView startDayHour={8} endDayHour={18} displayName="Hafta" />
-        <MonthView displayName="Ay" />
-        <DayView displayName="Gün" />
-        <AllDayPanel messages={{ allDay: "Tüm Gün" }} />
-        <Toolbar />
-        <ViewSwitcher />
-        <DateNavigator />
-        <EditRecurrenceMenu />
-        <ConfirmationDialog />
-        <Appointments />
-        <AppointmentTooltip showDeleteButton showOpenButton showCloseButton />
-        <ConfirmationDialog
-          messages={{
-            cancelButton: "Iptal",
-            discardButton: "Sil",
-            confirmCancelMessage: "Kaydedilmemiş değişiklikler silinsin mi?",
-            confirmDeleteMessage: "Olay silinsin mi?",
-            deleteButton: "Sil",
-          }}
-        />
-        <AppointmentForm
-          messages={{
-            detailsLabel: "Detay",
-            allDayLabel: "Tüm Gün",
-            titleLabel: "Başlık",
-            commitCommand: "Kaydet",
-            moreInformationLabel: "Daha Fazla Bilgi",
-            repeatLabel: "Tekrar",
-            notesLabel: "Notlar",
-            never: "Asla",
-            daily: "Günlük",
-            weekly: "Haftalık",
-            monthly: "Aylık",
-            yearly: "Yıllık",
-            repeatEveryLabel: "Her Birini Tekrarla",
-            daysLabel: "Günler",
-            endRepeatLabel: "Tekrarlamayı Sonlandır",
-            onLabel: "Açık",
-            afterLabel: "Sonra",
-            occurrencesLabel: "Olaylar",
-            weeksOnLabel: "Haftalar",
-            monthsLabel: "Aylar",
-            ofEveryMonthLabel: "Her ayın",
-            theLabel: "Bu",
-            firstLabel: "İlk",
-            secondLabel: "İkinci",
-            thirdLabel: "Üçüncü",
-            fourthLabel: "Dördüncü",
-            lastLabel: "Son",
-            yearsLabel: "Yıllar",
-            everyLabel: "Her",
-          }}
-        />
-      </Scheduler>
-    </Paper>
+    <>
+      <Paper>
+        <Scheduler data={events} height={600} locale={locale}>
+          <ViewState
+            defaultCurrentDate={currentDate}
+            onCurrentDateChange={setCurrentDate}
+            currentViewName={currentViewName}
+            onCurrentViewNameChange={setCurrentViewName}
+          />
+
+          <EditingState onCommitChanges={commitChanges} />
+
+          <WeekView
+            startDayHour={8}
+            endDayHour={18}
+            displayName={locale === "tr-TR" && "Hafta"}
+            cellDuration={60}
+          />
+          <MonthView displayName={locale === "tr-TR" && "Ay"} />
+          <DayView
+            displayName={locale === "tr-TR" && "Gün"}
+            startDayHour={8}
+            endDayHour={18}
+          />
+          <AllDayPanel messages={{ allDay: "Tüm Gün" }} />
+          <Toolbar />
+          <ViewSwitcher />
+          <DateNavigator />
+          <EditRecurrenceMenu />
+          <ConfirmationDialog />
+          <Appointments />
+          <AppointmentTooltip
+            showDeleteButton={
+              currentUser.authority === "Tam Yetki" ? true : false
+            }
+            showOpenButton={
+              currentUser.authority !== "Yetki Yok" ? true : false
+            }
+            showCloseButton
+          />
+          <ConfirmationDialog messages={locale === "tr-TR" && messages.tr} />
+          <AppointmentForm
+            messages={locale === "tr-TR" && messages.tr}
+            readOnly={currentUser.authority !== "Yetki Yok" ? false : true}
+          />
+          {currentUser.authority !== "Yetki Yok" && <DragDropProvider />}
+        </Scheduler>
+      </Paper>
+    </>
   );
 };
 

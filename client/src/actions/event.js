@@ -50,3 +50,14 @@ export const deleteEvent = async (eventId, dispatch) => {
   }
   dispatch({ type: "END_LOADING" });
 };
+
+export const updateEvent = (updatedEvents, eventId, dispatch) => {
+  return fetchData(
+    {
+      url: `${url}/updateEvent/${eventId}`,
+      method: "PATCH",
+      body: updatedEvents,
+    },
+    dispatch
+  );
+};

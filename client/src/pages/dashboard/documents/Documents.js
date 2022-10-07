@@ -15,8 +15,7 @@ const Documents = ({ setSelectedLink, link }) => {
   useEffect(() => {
     setSelectedLink(link);
     getDocument(dispatch);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, link, setSelectedLink]);
   return (
     <Box>
       {currentUser.authority !== "Yetki Yok" && (

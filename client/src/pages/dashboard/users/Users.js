@@ -18,8 +18,8 @@ const Users = ({ setSelectedLink, link }) => {
   const [rowId, setRowId] = useState(null);
   useEffect(() => {
     setSelectedLink(link);
-    if (users.length === 0) getUsers(dispatch);
-  }, [dispatch, link, setSelectedLink, users.length]);
+    getUsers(dispatch);
+  }, [dispatch, link, setSelectedLink, users.length, setRowId]);
 
   const columns = useMemo(
     () => [

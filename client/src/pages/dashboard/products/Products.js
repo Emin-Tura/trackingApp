@@ -16,8 +16,7 @@ const Products = ({ setSelectedLink, link }) => {
   useEffect(() => {
     setSelectedLink(link);
     getProducts(dispatch);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, link, setSelectedLink]);
 
   return (
     <Box>

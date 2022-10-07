@@ -6,7 +6,7 @@ import {
   IconButton,
   Divider,
 } from "@mui/material";
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { Check } from "@mui/icons-material";
 import { useValue } from "../../../context/ContextProvider";
 import { createTask, getTasks } from "../../../actions/task";
@@ -21,19 +21,20 @@ const Tasks = ({ setSelectedLink, link }) => {
   } = useValue();
   const taskRef = useRef();
 
-  useEffect(() => {
-    setSelectedLink(link);
-    getUsers(dispatch);
-    getTasks(dispatch);
-  }, [dispatch, link, setSelectedLink]);
-
-  const handleTaskSubmit = (e) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleTaskSubmit = useCallback((e) => {
     const task = taskRef.current.value;
     const newTask = { task, assigned, currentUser };
 
     createTask(newTask, dispatch);
     taskRef.current.value = "";
-  };
+  });
+
+  useEffect(() => {
+    setSelectedLink(link);
+    getUsers(dispatch);
+    getTasks(dispatch);
+  }, [dispatch, link, setSelectedLink, handleTaskSubmit]);
 
   return (
     <Box>

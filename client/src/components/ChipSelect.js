@@ -50,7 +50,7 @@ const ChipSelect = () => {
 
   return (
     <div style={{ margin: "0 1rem" }}>
-      <FormControl sx={{ m: 1, width: 200 }}>
+      <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="demo-multiple-chip-label">Görevlendirilen</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"

@@ -13,6 +13,10 @@ const UsersActions = ({ params, rowId, setRowId }) => {
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
 
+  useEffect(() => {
+    if (rowId === params.id && success) setSuccess(false);
+  }, [params.id, rowId, success]);
+
   const handleSubmit = async () => {
     setLoading(true);
 
@@ -28,10 +32,6 @@ const UsersActions = ({ params, rowId, setRowId }) => {
     }
     setLoading(false);
   };
-
-  useEffect(() => {
-    if (rowId === params.id && success) setSuccess(false);
-  }, [params.id, rowId, success]);
 
   const handleDelete = () => {
     if (currentUser.authority === "Tam Yetki") {
