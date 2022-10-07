@@ -23,6 +23,7 @@ import {
   CalendarMonth,
   Task,
   DocumentScanner,
+  AccountTree,
 } from "@mui/icons-material";
 import { useValue } from "../../context/ContextProvider";
 import { useNavigate, Routes, Route } from "react-router-dom";
@@ -33,6 +34,7 @@ import Calendar from "./calendar/Calendar";
 import Tasks from "./tasks/Tasks";
 import logo from "../../assets/logo1.png";
 import Documents from "./documents/Documents";
+import WorkFlow from "./workflow/WorkFlow";
 
 const drawerWidth = 280;
 
@@ -129,6 +131,12 @@ const SideList = ({ open, setOpen }) => {
         link: "documents",
         component: <Documents {...{ setSelectedLink, link: "documents" }} />,
       },
+      {
+        title: "Süreçler",
+        icon: <AccountTree />,
+        link: "workflows",
+        component: <WorkFlow {...{ setSelectedLink, link: "workflows" }} />,
+      },
     ],
     []
   );
@@ -183,7 +191,7 @@ const SideList = ({ open, setOpen }) => {
           <Tooltip title={currentUser?.name || ""}>
             <Avatar
               src={currentUser?.photoURL}
-              {...(open && { sx: { width: 75, height: 75 } })}
+              {...(open && { sx: { width: 50, height: 50 } })}
             />
           </Tooltip>
         </Box>
@@ -191,12 +199,16 @@ const SideList = ({ open, setOpen }) => {
           {open && (
             <>
               <Typography>{currentUser?.name}</Typography>
-              <Typography variant="body2">
-                {currentUser?.role || "role"}
-              </Typography>
-              <Typography variant="body2">
-                {currentUser?.authority || "yetki"}
-              </Typography>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Typography variant="body2">
+                  {currentUser?.role || "role"}-
+                </Typography>
+
+                <Typography variant="body2">
+                  {currentUser?.authority || "yetki"}
+                </Typography>
+              </div>
+
               <Typography variant="body2">{currentUser?.email}</Typography>
             </>
           )}
@@ -220,7 +232,7 @@ const SideList = ({ open, setOpen }) => {
         >
           <img src={logo} alt={"logo"} width="50" height="50" />
           {open && (
-            <Typography variant="body">
+            <Typography variant="body" sx={{ fontSize: "12px" }}>
               Cypoint © Tüm Hakları Saklıdır
             </Typography>
           )}

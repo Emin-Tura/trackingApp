@@ -83,14 +83,13 @@ const DocumentList = () => {
                   (file.file.split(".").slice(-1)[0] === "pdf" && "pdf.png") ||
                   (file.file.split(".").slice(-1)[0] === "docx" &&
                     "docx.png") ||
-                  (file.file.split(".").slice(-1)[0] === "doc" && "docx.png") ||
+                  (file.file.split(".").slice(-1)[0] === "doc" && "doc.png") ||
                   (file.file.split(".").slice(-1)[0] === "xlsx" &&
                     "xlsx.png") ||
-                  (file.file.split(".").slice(-1)[0] === "xls" && "xlsx.png") ||
+                  (file.file.split(".").slice(-1)[0] === "xls" && "xls.png") ||
                   (file.file.split(".").slice(-1)[0] === "pptx" &&
                     "pptx.png") ||
-                  (file.file.split(".").slice(-1)[0] === "ppt" && "pptx.png") ||
-                  (file.file.split(".").slice(-1)[0] === "ppt" && "pptx.png") ||
+                  (file.file.split(".").slice(-1)[0] === "ppt" && "ppt.png") ||
                   (file.file.split(".").slice(-1)[0] === "txt" && "txt.png") ||
                   (file.file.split(".").slice(-1)[0] === "odt" && "txt.png") ||
                   (file.file.split(".").slice(-1)[0] === "ott" && "txt.png") ||
@@ -116,7 +115,10 @@ const DocumentList = () => {
                   (file.file.split(".").slice(-1)[0] === "mp4" && "mp4.png") ||
                   (file.file.split(".").slice(-1)[0] === "mkv" && "mp4.png") ||
                   (file.file.split(".").slice(-1)[0] === "mp3" && "mp3.png") ||
-                  (file.file.split(".").slice(-1)[0] === "html" && "html.png")
+                  (file.file.split(".").slice(-1)[0] === "html" &&
+                    "html.png") ||
+                  (file.file.split(".").slice(-1)[0] === "crt" &&
+                    "certificate.png")
                 }`)}
                 alt="img"
                 style={{

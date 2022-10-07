@@ -25,6 +25,8 @@ const AddDocument = () => {
   } = useValue();
 
   const [error, setError] = useState(false);
+  const statusRef = React.useRef();
+  const loadTotalRef = React.useRef();
   const document = new FormData();
   document.append("title", title);
   document.append("file", file);
@@ -41,11 +43,25 @@ const AddDocument = () => {
   };
 
   const handleChange = (e) => {
-    if (
-      e.target.files[0].name.includes("(") ||
-      e.target.files[0].name.includes(")") ||
-      e.target.files[0].name.includes("[") ||
-      e.target.files[0].name.includes("]")
+    const file = e.target.files[0];
+    if (file.size > 52428800) {
+      e.target.value = null;
+      //50MB
+      dispatch({
+        type: "UPDATE_ALERT",
+        payload: {
+          open: true,
+          severity: "error",
+          message:
+            "Dosya Boyutu Çok Büyük! Dosya Boyutu 50mb'dan Küçük Olmalıdır",
+        },
+      });
+      setError(true);
+    } else if (
+      file.name.includes("(") ||
+      file.name.includes(")") ||
+      file.name.includes("[") ||
+      file.name.includes("]")
     ) {
       dispatch({
         type: "UPDATE_ALERT",
@@ -58,10 +74,16 @@ const AddDocument = () => {
       setError(true);
     } else {
       setError(false);
-      dispatch({ type: "UPDATE_FILES", payload: e.target.files[0] });
+      var xhr = new XMLHttpRequest();
+      xhr.upload.addEventListener("progress", ProgressHandler, false);
+      dispatch({ type: "UPDATE_FILES", payload: file });
     }
   };
-
+  const ProgressHandler = (e) => {
+    loadTotalRef.current.innerHTML = `uploaded ${e.loaded} bytes of ${e.total}`;
+    var percent = (e.loaded / e.total) * 100;
+    statusRef.current.innerHTML = Math.round(percent) + "% uploaded...";
+  };
   return (
     <Dialog open={openLogin} onClose={handleClose}>
       <Box
@@ -107,6 +129,8 @@ const AddDocument = () => {
               variant="outlined"
               onChange={handleChange}
             />
+            <p ref={statusRef}></p>
+            <p ref={loadTotalRef}></p>
           </DialogContent>
 
           <Button
