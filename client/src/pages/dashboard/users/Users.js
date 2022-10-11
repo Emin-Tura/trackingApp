@@ -16,6 +16,7 @@ const Users = ({ setSelectedLink, link }) => {
 
   const [pageSize, setPageSize] = useState(5);
   const [rowId, setRowId] = useState(null);
+  const [currentRowId, setCurrentRowId] = useState(null);
   useEffect(() => {
     setSelectedLink(link);
     getUsers(dispatch);
@@ -50,21 +51,30 @@ const Users = ({ setSelectedLink, link }) => {
           "Satış",
           "Muhasebe",
         ],
-        editable: currentUser.authority === "Tam Yetki" ? true : false,
+        editable: true,
       },
       {
         field: "active",
         headerName: "Aktif",
-        width: 100,
+        width: 75,
         type: "boolean",
-        editable: currentUser.authority === "Tam Yetki" ? true : false,
+        editable: true,
       },
       {
         field: "createdAt",
         headerName: "Kayıt Tarihi",
-        width: 175,
+        width: 150,
         renderCell: (params) =>
-          moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
+          moment(params?.row?.createdAt).format("YYYY-MM-DD HH:MM:SS"),
+      },
+      {
+        field: "updatedAt",
+        headerName: "Çıkış Tarihi",
+        width: 150,
+        renderCell: (params) =>
+          params.row.active
+            ? "Aktif"
+            : moment(params?.row?.updatedAt).format("YYYY-MM-DD H:mm:ss"),
       },
       currentUser.authority === "Tam Yetki" && {
         field: "authority",
@@ -80,25 +90,25 @@ const Users = ({ setSelectedLink, link }) => {
         type: "actions",
         width: 125,
         renderCell: (params) => (
-          <UsersActions {...{ params, rowId, setRowId }} />
+          <UsersActions {...{ params, rowId, setRowId, currentRowId }} />
         ),
       },
     ],
-    [currentUser.authority, rowId]
+    [currentUser.authority, rowId, currentRowId]
   );
 
   return (
     <>
       <Box
         sx={{
-          height: 411,
+          height: 450,
           width: "100%",
         }}
       >
         <Typography
           variant="h3"
           component="h3"
-          sx={{ textAlign: "center", mt: 3, mb: 3 }}
+          sx={{ textAlign: "center", mb: 3 }}
         >
           Çalışanlar
         </Typography>
@@ -127,6 +137,8 @@ const Users = ({ setSelectedLink, link }) => {
             px: 2,
           }}
           onCellEditCommit={(params) => setRowId(params.id)}
+          onCellClick={(params) => setCurrentRowId(params.id)}
+          isCellEditable={(params) => currentUser.authority === "Tam Yetki"}
         />
 
         {currentUser.authority !== "Yetki Yok" && (

@@ -5,7 +5,7 @@ import { green } from "@mui/material/colors";
 import { deleteUser, updateStatus } from "../../../actions/user";
 import { useValue } from "../../../context/ContextProvider";
 
-const UsersActions = ({ params, rowId, setRowId }) => {
+const UsersActions = ({ params, rowId, setRowId, currentRowId }) => {
   const {
     state: { currentUser },
     dispatch,
@@ -15,7 +15,18 @@ const UsersActions = ({ params, rowId, setRowId }) => {
 
   useEffect(() => {
     if (rowId === params.id && success) setSuccess(false);
-  }, [params.id, rowId, success]);
+    if (rowId) {
+      currentRowId !== rowId &&
+        dispatch({
+          type: "UPDATE_ALERT",
+          payload: {
+            open: true,
+            severity: "error",
+            message: "Değişikliği Kaydetmediniz!",
+          },
+        });
+    }
+  }, [params.id, rowId, success, currentRowId, setRowId, dispatch]);
 
   const handleSubmit = async () => {
     setLoading(true);

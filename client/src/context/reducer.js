@@ -99,9 +99,23 @@ const reducer = (state, action) => {
         ...state,
         events: action.payload,
       };
-
+    case "UPDATE_COMPANIES":
+      return { ...state, companies: action.payload };
     default:
       throw new Error("No matched action!");
+
+    case "UPDATE_COMPANY":
+      return {
+        ...state,
+        company: action.payload,
+      };
+    case "DELETE_COMPANY":
+      return {
+        ...state,
+        companies: state.companies.filter(
+          (company) => company._id !== action.payload
+        ),
+      };
   }
 };
 

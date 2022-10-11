@@ -10,7 +10,7 @@ import React, { useCallback, useEffect, useRef } from "react";
 import { Check } from "@mui/icons-material";
 import { useValue } from "../../../context/ContextProvider";
 import { createTask, getTasks } from "../../../actions/task";
-import ChipSelect from "../../../components/ChipSelect";
+import ChipSelect from "./ChipSelect";
 import { getUsers } from "../../../actions/user";
 import TasksList from "./TasksList";
 

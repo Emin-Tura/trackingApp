@@ -34,7 +34,7 @@ import Calendar from "./calendar/Calendar";
 import Tasks from "./tasks/Tasks";
 import logo from "../../assets/logo1.png";
 import Documents from "./documents/Documents";
-import WorkFlow from "./workflow/WorkFlow";
+import WorkFlows from "./workflow/WorkFlows";
 
 const drawerWidth = 280;
 
@@ -135,7 +135,7 @@ const SideList = ({ open, setOpen }) => {
         title: "Süreçler",
         icon: <AccountTree />,
         link: "workflows",
-        component: <WorkFlow {...{ setSelectedLink, link: "workflows" }} />,
+        component: <WorkFlows {...{ setSelectedLink, link: "workflows" }} />,
       },
     ],
     []

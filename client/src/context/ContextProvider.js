@@ -17,6 +17,8 @@ const initialState = {
   tasks: [],
   events: [],
   assigned: null,
+  companies: [],
+  company: null,
 };
 
 const Context = createContext(initialState);

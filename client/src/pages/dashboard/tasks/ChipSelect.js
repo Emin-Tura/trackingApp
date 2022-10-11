@@ -9,7 +9,7 @@ import {
   Select,
   Chip,
 } from "@mui/material";
-import { useValue } from "../context/ContextProvider";
+import { useValue } from "../../../context/ContextProvider";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -70,15 +70,18 @@ const ChipSelect = () => {
           )}
           MenuProps={MenuProps}
         >
-          {users.map((name) => (
-            <MenuItem
-              key={name.name}
-              value={name.name}
-              style={getStyles(name, personName, theme)}
-            >
-              {name.name}
-            </MenuItem>
-          ))}
+          {users.map(
+            (name) =>
+              name.active === true && (
+                <MenuItem
+                  key={name.name}
+                  value={name.name}
+                  style={getStyles(name, personName, theme)}
+                >
+                  {name.name}
+                </MenuItem>
+              )
+          )}
         </Select>
       </FormControl>
     </div>
