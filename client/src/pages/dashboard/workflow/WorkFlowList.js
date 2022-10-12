@@ -39,13 +39,13 @@ const WorkFlowList = () => {
 
   const handleSubmit = useCallback(
     async (company) => {
-      const { email } = currentUser;
+      const { email, name } = currentUser;
       const { _id } = company;
       if (currentUser.authority !== "Yetki Yok") {
         let text = "Süreci tamamlamak istediğinize emin misiniz?";
         if (window.confirm(text)) {
           const result = await updateCompany(
-            { completed: true, completedEmail: email },
+            { completed: true, completedEmail: email, completedName: name },
             _id,
             dispatch
           );
@@ -58,6 +58,7 @@ const WorkFlowList = () => {
                 message: "Sürec Başarıyla Tamamlandı",
               },
             });
+            window.location.reload();
           }
         }
       } else {
@@ -91,7 +92,9 @@ const WorkFlowList = () => {
           <CardActions>
             {company.completed && (
               <Tooltip
-                title={`Bu süreç ${company.completedEmail} hesabı tarafından tamamlanmıştır.`}
+                title={`Bu süreç ${
+                  company.completedName || company.completedEmail
+                } hesabı tarafından tamamlandı olarak işaretlenmiştir.`}
                 style={{ position: "absolute", left: 2, top: 5 }}
               >
                 <Info />

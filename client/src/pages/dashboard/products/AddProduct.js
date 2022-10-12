@@ -6,13 +6,18 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
+  Slide,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import React from "react";
+import React, { forwardRef } from "react";
 import { createProduct } from "../../../actions/product";
 import { useValue } from "../../../context/ContextProvider";
 import AddImages from "./addImages/AddImages";
 import InfoField from "../../../components/InfoField";
+
+const Transition = forwardRef((props, ref) => {
+  return <Slide direction="left" ref={ref} {...props} />;
+});
 
 const AddProduct = () => {
   const {
@@ -32,6 +37,7 @@ const AddProduct = () => {
     };
     createProduct(product, dispatch);
     dispatch({ type: "CLOSE_LOGIN" });
+    window.location.reload();
   };
 
   const handleClose = () => {
@@ -40,7 +46,11 @@ const AddProduct = () => {
   };
 
   return (
-    <Dialog open={openLogin} onClose={handleClose}>
+    <Dialog
+      open={openLogin}
+      onClose={handleClose}
+      TransitionComponent={Transition}
+    >
       <Box
         sx={{
           width: 600,

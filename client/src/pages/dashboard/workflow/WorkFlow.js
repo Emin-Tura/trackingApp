@@ -11,11 +11,6 @@ import {
   Typography,
 } from "@mui/material";
 import React, { forwardRef } from "react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/effect-coverflow";
-import "swiper/css/lazy";
-import "swiper/css/zoom";
 
 import { useValue } from "../../../context/ContextProvider";
 import moment from "moment";

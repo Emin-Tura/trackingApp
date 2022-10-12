@@ -18,10 +18,11 @@ export const deleteCompany = tryCatch(async (req, res) => {
 });
 
 export const updateCompany = tryCatch(async (req, res) => {
-  const { completed, completedEmail } = req.body;
+  const { completed, completedEmail, completedName } = req.body;
   await Company.findByIdAndUpdate(req.params.companyId, {
     completed,
     completedEmail,
+    completedName,
   });
   res
     .status(200)

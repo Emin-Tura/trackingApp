@@ -6,13 +6,18 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
+  Slide,
   TextField,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import React, { useState } from "react";
+import React, { forwardRef, useState } from "react";
 import { useValue } from "../../../context/ContextProvider";
 import InfoField from "../../../components/InfoField";
 import { createDocument } from "../../../actions/document";
+
+const Transition = forwardRef((props, ref) => {
+  return <Slide direction="left" ref={ref} {...props} />;
+});
 
 const AddDocument = () => {
   const {
@@ -37,6 +42,7 @@ const AddDocument = () => {
     createDocument(document, dispatch);
     dispatch({ type: "CLOSE_LOGIN" });
     dispatch({ type: "RESET_DETAIL" });
+    window.location.reload();
   };
 
   const handleClose = () => {
@@ -87,7 +93,11 @@ const AddDocument = () => {
     statusRef.current.innerHTML = Math.round(percent) + "% uploaded...";
   };
   return (
-    <Dialog open={openLogin} onClose={handleClose}>
+    <Dialog
+      open={openLogin}
+      onClose={handleClose}
+      TransitionComponent={Transition}
+    >
       <Box
         sx={{
           width: 400,

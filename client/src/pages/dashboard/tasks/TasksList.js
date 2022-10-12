@@ -31,11 +31,11 @@ const TasksList = () => {
   const handleTask = useCallback(
     async (task) => {
       const { _id } = task;
-      const { email } = currentUser;
+      const { name, email } = currentUser;
       let text = "Görevi tamamlamak istediğinize emin misiniz?";
       if (window.confirm(text)) {
         const result = await updateTask(
-          { completed: true, email },
+          { completed: true, name, email },
           _id,
           dispatch
         );
@@ -162,7 +162,9 @@ const TasksList = () => {
                   </Tooltip>
                   {task.completed && (
                     <Tooltip
-                      title={`Bu görev ${task.email} hesabından tamamlanmıştır.`}
+                      title={`Bu görev ${
+                        task.name || task.email
+                      } tarafından tamamlanmıştır.`}
                       style={{ position: "absolute", right: "-2rem" }}
                     >
                       <Info

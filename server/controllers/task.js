@@ -12,8 +12,8 @@ export const getTasks = tryCatch(async (req, res) => {
   res.status(200).json({ success: true, result: task });
 });
 export const updateTask = tryCatch(async (req, res) => {
-  const { completed, email } = req.body;
-  await Task.findByIdAndUpdate(req.params.taskId, { completed, email });
+  const { completed, name, email } = req.body;
+  await Task.findByIdAndUpdate(req.params.taskId, { completed, name, email });
   res.status(200).json({ success: true, result: { _id: req.params.taskId } });
 });
 

@@ -8,11 +8,16 @@ import {
   DialogTitle,
   IconButton,
   InputAdornment,
+  Slide,
   TextField,
 } from "@mui/material";
-import React, { useRef } from "react";
+import React, { forwardRef, useRef } from "react";
 import { createUser } from "../../../actions/user";
 import { useValue } from "../../../context/ContextProvider";
+
+const Transition = forwardRef((props, ref) => {
+  return <Slide direction="left" ref={ref} {...props} />;
+});
 
 const CreateUser = () => {
   const {
@@ -45,6 +50,7 @@ const CreateUser = () => {
       { name, email, password, file: profile.file },
       dispatch
     );
+    window.location.reload();
   };
 
   const handleChange = (e) => {
@@ -59,7 +65,11 @@ const CreateUser = () => {
   };
 
   return (
-    <Dialog open={openLogin} onClose={handleClose}>
+    <Dialog
+      open={openLogin}
+      onClose={handleClose}
+      TransitionComponent={Transition}
+    >
       <DialogTitle>
         Çalışan Oluştur
         <IconButton

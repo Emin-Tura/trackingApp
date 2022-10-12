@@ -16,8 +16,8 @@ const WorkFlows = ({ setSelectedLink, link }) => {
 
   useEffect(() => {
     setSelectedLink(link);
-    getCompanies(dispatch);
     getProducts(dispatch);
+    getCompanies(dispatch);
   }, [dispatch, link, setSelectedLink]);
 
   return (

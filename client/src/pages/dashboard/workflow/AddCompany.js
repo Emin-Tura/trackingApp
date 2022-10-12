@@ -9,14 +9,20 @@ import {
   IconButton,
   TextField,
   Stack,
+  Slide,
 } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import React, { useRef, useState } from "react";
+import React, { forwardRef, useRef, useState } from "react";
 import { useValue } from "../../../context/ContextProvider";
 import { MuiTelInput } from "mui-tel-input";
 import { createCompany } from "../../../actions/company";
 import { DesktopDatePicker } from "@mui/x-date-pickers";
+
+const Transition = forwardRef((props, ref) => {
+  return <Slide direction="left" ref={ref} {...props} />;
+});
+
 const AddCompany = () => {
   const {
     state: { openLogin },
@@ -48,6 +54,7 @@ const AddCompany = () => {
       dispatch
     );
     dispatch({ type: "CLOSE_LOGIN" });
+    window.location.reload();
   };
 
   const handleClose = () => {
@@ -55,8 +62,9 @@ const AddCompany = () => {
     dispatch({ type: "RESET_DETAIL" });
     setDay(Date.now());
   };
+
   return (
-    <Dialog open={openLogin} onClose={handleClose}>
+    <Dialog open={openLogin} TransitionComponent={Transition}>
       <Box
         sx={{
           width: 600,
@@ -116,7 +124,6 @@ const AddCompany = () => {
                 type="text"
                 fullWidth
                 inputRef={relatedNameRef}
-                inputProps={{ minLength: 2 }}
               />
             </Stack>
             <Stack
@@ -169,6 +176,7 @@ const AddCompany = () => {
                 inputRef={productRef}
                 sx={{ mr: 2 }}
                 required
+                inputProps={{ minLength: 2 }}
               />
               <LocalizationProvider dateAdapter={AdapterMoment}>
                 <DesktopDatePicker
@@ -189,7 +197,6 @@ const AddCompany = () => {
               fullWidth
               multiline
               rows={3}
-              inputProps={{ minLength: 5 }}
               inputRef={addressRef}
             />
             <TextField
@@ -202,7 +209,6 @@ const AddCompany = () => {
               multiline
               fullWidth
               rows={2}
-              minLength={5}
             />
           </DialogContent>
           <DialogActions sx={{ px: "19px", pb: 3 }}>

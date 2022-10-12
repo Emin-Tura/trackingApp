@@ -7,6 +7,7 @@ const taskSchema = mongoose.Schema(
     currentUser: { type: [] },
     completed: { type: Boolean, default: false },
     email: { type: String },
+    name: { type: String },
   },
   { timestamps: true }
 );
