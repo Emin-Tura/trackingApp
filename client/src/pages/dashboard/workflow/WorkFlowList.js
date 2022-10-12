@@ -94,7 +94,7 @@ const WorkFlowList = () => {
               <Tooltip
                 title={`Bu süreç ${
                   company.completedName || company.completedEmail
-                } hesabı tarafından tamamlandı olarak işaretlenmiştir.`}
+                } tarafından tamamlandı olarak işaretlenmiştir.`}
                 style={{ position: "absolute", left: 2, top: 5 }}
               >
                 <Info />

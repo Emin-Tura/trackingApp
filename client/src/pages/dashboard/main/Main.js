@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { AddTask, AssignmentReturned, Group, Store } from "@mui/icons-material";
+import {
+  AddTask,
+  EventNote,
+  Group,
+  Store,
+  Work,
+  WorkHistory,
+} from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -17,19 +24,22 @@ import moment from "moment";
 import AreaUsersProducts from "./AreaUsersProducts";
 import { getProducts } from "../../../actions/product";
 import { getTasks } from "../../../actions/task";
+import { getCompanies } from "../../../actions/company";
+import { getEvents } from "../../../actions/event";
 
 const Main = ({ setSelectedLink, link }) => {
   const {
-    state: { users, products, tasks, currentUser },
+    state: { users, products, tasks, currentUser, companies, events },
     dispatch,
   } = useValue();
   useEffect(() => {
     setSelectedLink(link);
-    if (users.length === 0) getUsers(dispatch);
-    if (products.length === 0) getProducts(dispatch);
-    if (tasks.length === 0) getTasks(dispatch);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    getUsers(dispatch);
+    getProducts(dispatch);
+    getTasks(dispatch);
+    getCompanies(dispatch);
+    getEvents(dispatch);
+  }, [dispatch, link, setSelectedLink]);
 
   return (
     <Box
@@ -84,20 +94,16 @@ const Main = ({ setSelectedLink, link }) => {
           <Typography variant="h4">{products.length}</Typography>
         </Box>
       </Paper>
-      <Paper elevation={3} sx={{ p: 2, gridColumn: "1/3" }}>
-        <AreaUsersProducts />
-      </Paper>
       <Paper
         elevation={4}
         sx={{
           p: 3,
-          gridColumn: "1/3",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
         }}
       >
-        <Typography variant="h4">Oluştulan Görev Sayısı</Typography>
+        <Typography variant="h4">Toplam Süreç Sayısı</Typography>
         <Box
           sx={{
             display: "flex",
@@ -105,39 +111,116 @@ const Main = ({ setSelectedLink, link }) => {
             justifyContent: "center",
           }}
         >
-          <AssignmentReturned
-            sx={{ height: 100, width: 100, opacity: 0.3, mr: 1 }}
-          />
-          <Typography variant="h4">{tasks.length}</Typography>
+          <Work sx={{ height: 100, width: 100, opacity: 0.3, mr: 1 }} />
+          <Typography variant="h4">{companies.length}</Typography>
         </Box>
       </Paper>
+      <Paper
+        elevation={4}
+        sx={{
+          p: 3,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        <Typography variant="h4">Aktif Süreç Sayısı</Typography>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <WorkHistory sx={{ height: 100, width: 100, opacity: 0.3, mr: 1 }} />
+          <Typography variant="h4">
+            {companies.filter((e) => e.completed === false).length}
+          </Typography>
+        </Box>
+      </Paper>
+
+      <Paper elevation={3} sx={{ p: 2, gridColumn: "1/3" }}>
+        <AreaUsersProducts />
+      </Paper>
+
       <Paper elevation={3} sx={{ p: 2, gridColumn: 3, gridRow: "1/4" }}>
         <Box>
           <Typography>Son Eklenen Görevler</Typography>
           <List>
-            {tasks.slice(0, 4).map((task, i) =>
-              task.assigned.filter((name) => name === currentUser.name)
-                .length || currentUser.authority === "Tam Yetki" ? (
-                <Box key={task?._id}>
+            {tasks
+              .filter((e) => e.completed === false)
+              .slice(0, 4)
+              .map((task, i) =>
+                task.assigned.filter((name) => name === currentUser.name)
+                  .length || currentUser.authority === "Tam Yetki" ? (
+                  <Box key={task?._id}>
+                    <ListItem>
+                      <ListItemAvatar>
+                        <AddTask fontSize="large" />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={`${task?.task}`}
+                        secondary={`Oluşturma Zamanı: ${moment(
+                          task?.createdAt
+                        ).format("YYYY-MM-DD H:mm:ss")}`}
+                      />
+                    </ListItem>
+                    {i !== 3 && <Divider variant="inset" />}
+                  </Box>
+                ) : null
+              )}
+          </List>
+        </Box>
+        <Divider sx={{ mt: 3, mb: 3, opacity: 0.8 }} />
+
+        <Box>
+          <Typography>Son Eklenen Süreçler</Typography>
+          <List>
+            {companies
+              .filter((e) => e.completed === false)
+              .slice(0, 4)
+              .map((company, i) => (
+                <Box key={company._id}>
                   <ListItem>
                     <ListItemAvatar>
-                      <AddTask fontSize="large" />
+                      <Work fontSize="large" />
                     </ListItemAvatar>
                     <ListItemText
-                      primary={task?.task}
+                      primary={company?.name}
                       secondary={`Oluşturma Zamanı: ${moment(
-                        task?.createdAt
+                        company?.createdAt
                       ).format("YYYY-MM-DD H:mm:ss")}`}
                     />
                   </ListItem>
                   {i !== 3 && <Divider variant="inset" />}
                 </Box>
-              ) : null
-            )}
+              ))}
           </List>
         </Box>
         <Divider sx={{ mt: 3, mb: 3, opacity: 0.8 }} />
 
+        <Box>
+          <Typography>Son Eklenen Olaylar</Typography>
+          <List>
+            {events.slice(0, 4).map((event, i) => (
+              <Box key={event?._id}>
+                <ListItem>
+                  <ListItemAvatar>
+                    <EventNote fontSize="large" />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={event?.title}
+                    secondary={`Tarih: ${moment(event?.startDate).format(
+                      "YYYY-MM-DD H:mm"
+                    )} - ${moment(event?.endDate).format("H:mm")}`}
+                  />
+                </ListItem>
+                {i !== 3 && <Divider variant="inset" />}
+              </Box>
+            ))}
+          </List>
+        </Box>
+        <Divider sx={{ mt: 3, mb: 3, opacity: 0.8 }} />
         <Box>
           <Typography>Son Eklenen Çalışanlar</Typography>
           <List>
@@ -153,30 +236,6 @@ const Main = ({ setSelectedLink, link }) => {
                     primary={user?.name}
                     secondary={`Oluşturma Zamanı: ${moment(
                       user?.createdAt
-                    ).format("YYYY-MM-DD H:mm:ss")}`}
-                  />
-                </ListItem>
-                {i !== 3 && <Divider variant="inset" />}
-              </Box>
-            ))}
-          </List>
-        </Box>
-
-        <Divider sx={{ mt: 3, mb: 3, opacity: 0.8 }} />
-
-        <Box>
-          <Typography>Son Eklenen Ürünler</Typography>
-          <List>
-            {products.slice(0, 4).map((product, i) => (
-              <Box key={product?._id}>
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar alt={product?.title} src={product?.images[0]} />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={product?.title}
-                    secondary={`Oluşturma Zamanı: ${moment(
-                      product?.createdAt
                     ).format("YYYY-MM-DD H:mm:ss")}`}
                   />
                 </ListItem>
