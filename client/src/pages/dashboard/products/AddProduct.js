@@ -37,7 +37,6 @@ const AddProduct = () => {
     };
     createProduct(product, dispatch);
     dispatch({ type: "CLOSE_LOGIN" });
-    window.location.reload();
   };
 
   const handleClose = () => {
@@ -101,9 +100,7 @@ const AddProduct = () => {
             variant="contained"
             endIcon={<DownloadDone />}
             sx={{ my: 2 }}
-            disabled={
-              !(title.length > 4 && description.length > 9 && images.length > 0)
-            }
+            disabled={!(title.length > 4 && description.length > 9)}
             onClick={handleSubmit}
           >
             Kaydet

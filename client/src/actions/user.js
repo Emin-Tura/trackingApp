@@ -71,6 +71,7 @@ export const createUser = async (currentUser, updatedFields, dispatch) => {
         type: "UPDATE_PROFILE",
         payload: { open: false, file: null, photoURL: result.photoURL },
       });
+      window.location.reload();
     }
   } catch (error) {
     dispatch({

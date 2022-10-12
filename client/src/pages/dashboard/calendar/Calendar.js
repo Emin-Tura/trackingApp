@@ -34,7 +34,7 @@ const Calendar = ({ setSelectedLink, link }) => {
   } = useValue();
 
   const [id, setId] = useState(uuidv4());
-  const [currentDate, setCurrentDate] = useState(Date.now());
+  const [currentDate, setCurrentDate] = useState(new Date());
   const [currentViewName, setCurrentViewName] = useState();
   const [locale] = useState("tr-TR");
 

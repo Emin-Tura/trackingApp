@@ -50,7 +50,6 @@ const CreateUser = () => {
       { name, email, password, file: profile.file },
       dispatch
     );
-    window.location.reload();
   };
 
   const handleChange = (e) => {

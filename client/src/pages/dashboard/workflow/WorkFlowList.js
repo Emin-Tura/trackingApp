@@ -1,4 +1,4 @@
-import { Check, Clear, Edit, Info } from "@mui/icons-material";
+import { Check, Clear, Info } from "@mui/icons-material";
 import {
   Box,
   Card,
@@ -134,14 +134,6 @@ const WorkFlowList = () => {
             </Typography>
           </CardContent>
           <CardActions sx={{ mt: 1 }}>
-            <IconButton
-              disabled={company.completed}
-              sx={{ position: "absolute", left: 0, bottom: 2 }}
-            >
-              <Tooltip title={"Süreci Düzenle"}>
-                <Edit />
-              </Tooltip>
-            </IconButton>
             <IconButton
               sx={{ position: "absolute", right: 0, bottom: 2 }}
               onClick={() => handleSubmit(company)}

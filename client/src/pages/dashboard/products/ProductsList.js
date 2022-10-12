@@ -47,7 +47,9 @@ const ProductsList = () => {
       >
         {products.map((product, index) => (
           <Card key={index}>
-            <ImageListItem sx={{ height: "300px !important" }}>
+            <ImageListItem
+              sx={{ height: "300px !important", position: "relative" }}
+            >
               <ImageListItemBar
                 sx={{
                   background:
@@ -64,15 +66,34 @@ const ProductsList = () => {
                   </IconButton>
                 }
               />
-              <img
-                src={product.images[0]}
-                alt={product.title}
-                loading="lazy"
-                style={{ cursor: "pointer" }}
-                onClick={() =>
-                  dispatch({ type: "UPDATE_PRODUCT", payload: product })
-                }
-              />
+              {product.images[0] ? (
+                <img
+                  src={product.images[0]}
+                  alt={"img"}
+                  loading="lazy"
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    dispatch({ type: "UPDATE_PRODUCT", payload: product })
+                  }
+                />
+              ) : (
+                <ImageListItemBar
+                  title={product.title}
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    textAlign: "center",
+                    background: "#1E1E1E",
+                    cursor: "pointer",
+                  }}
+                  onClick={() =>
+                    dispatch({ type: "UPDATE_PRODUCT", payload: product })
+                  }
+                />
+              )}
+
               <ImageListItemBar title={product.description} />
             </ImageListItem>
           </Card>

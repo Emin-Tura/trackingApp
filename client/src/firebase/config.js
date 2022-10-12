@@ -7,12 +7,13 @@ import { getStorage } from "firebase/storage";
 // Your web app's Firebase configuration
 //Bu bilgiler firebae projesi oluştuturken geliyor.
 const firebaseConfig = {
-  apiKey: "AIzaSyCdbni8U3aDoCdfeDucYZAxPdfHwvgJVf8",
-  authDomain: "cypoint-tracking.firebaseapp.com",
-  projectId: "cypoint-tracking",
-  storageBucket: "cypoint-tracking.appspot.com",
-  messagingSenderId: "484510589429",
-  appId: "1:484510589429:web:2eb1a2450cb8e6b54a00bc",
+  apiKey: "AIzaSyBQqYlA-2N3lkTW9socF6LxQjMEL8H3yWA",
+  authDomain: "cypointapp.firebaseapp.com",
+  projectId: "cypointapp",
+  storageBucket: "cypointapp.appspot.com",
+  messagingSenderId: "130164951451",
+  appId: "1:130164951451:web:fe37581721f5ae98def93e",
+  measurementId: "G-FQ2HWPM09J",
 };
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);

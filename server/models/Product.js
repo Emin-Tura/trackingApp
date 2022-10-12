@@ -11,7 +11,6 @@ const productSchema = mongoose.Schema(
     },
     images: {
       type: [String],
-      validate: (v) => Array.isArray(v) && v.length > 0,
     },
   },
   { timestamps: true }

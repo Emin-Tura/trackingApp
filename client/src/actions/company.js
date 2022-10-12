@@ -21,6 +21,7 @@ export const createCompany = async (company, dispatch) => {
         message: "Süreç Başarıyla Oluşturuldu",
       },
     });
+    window.location.reload();
     dispatch({ type: "CLOSE_LOGIN" });
   }
 

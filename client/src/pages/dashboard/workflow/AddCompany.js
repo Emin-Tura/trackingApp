@@ -54,7 +54,6 @@ const AddCompany = () => {
       dispatch
     );
     dispatch({ type: "CLOSE_LOGIN" });
-    window.location.reload();
   };
 
   const handleClose = () => {
