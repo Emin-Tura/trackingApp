@@ -17,7 +17,7 @@ import TasksList from "./TasksList";
 const Tasks = ({ setSelectedLink, link }) => {
   const {
     dispatch,
-    state: { currentUser, assigned },
+    state: { currentUser, assigned, users },
   } = useValue();
   const taskRef = useRef();
 
@@ -32,9 +32,9 @@ const Tasks = ({ setSelectedLink, link }) => {
 
   useEffect(() => {
     setSelectedLink(link);
-    getUsers(dispatch);
+    if (users.length === 0) getUsers(dispatch);
     getTasks(dispatch);
-  }, [dispatch, link, setSelectedLink, handleTaskSubmit]);
+  }, [dispatch, link, setSelectedLink, handleTaskSubmit, users.length]);
 
   return (
     <Box>

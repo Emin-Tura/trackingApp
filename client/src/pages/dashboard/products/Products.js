@@ -10,13 +10,13 @@ import Product from "./Product";
 const Products = ({ setSelectedLink, link }) => {
   const {
     dispatch,
-    state: { currentUser },
+    state: { currentUser, products },
   } = useValue();
 
   useEffect(() => {
     setSelectedLink(link);
-    getProducts(dispatch);
-  }, [dispatch, link, setSelectedLink]);
+    if (products.length === 0) getProducts(dispatch);
+  }, [dispatch, link, products.length, setSelectedLink]);
 
   return (
     <Box>

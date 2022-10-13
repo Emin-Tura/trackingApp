@@ -58,8 +58,8 @@ const Calendar = ({ setSelectedLink, link }) => {
 
   useEffect(() => {
     setSelectedLink(link);
-    getEvents(dispatch);
-  }, [dispatch, link, setSelectedLink, commitChanges]);
+    if (events.length === 0) getEvents(dispatch);
+  }, [dispatch, link, setSelectedLink, commitChanges, events.length]);
 
   return (
     <>

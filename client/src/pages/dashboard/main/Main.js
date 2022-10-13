@@ -34,12 +34,21 @@ const Main = ({ setSelectedLink, link }) => {
   } = useValue();
   useEffect(() => {
     setSelectedLink(link);
-    getUsers(dispatch);
-    getProducts(dispatch);
-    getTasks(dispatch);
-    getCompanies(dispatch);
-    getEvents(dispatch);
-  }, [dispatch, link, setSelectedLink]);
+    if (users.length === 0) getUsers(dispatch);
+    if (products.length === 0) getProducts(dispatch);
+    if (tasks.length === 0) getTasks(dispatch);
+    if (companies.length === 0) getCompanies(dispatch);
+    if (events.length === 0) getEvents(dispatch);
+  }, [
+    companies.length,
+    dispatch,
+    events.length,
+    link,
+    products.length,
+    setSelectedLink,
+    tasks.length,
+    users.length,
+  ]);
 
   return (
     <Box

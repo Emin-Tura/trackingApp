@@ -10,15 +10,15 @@ import WorkFlowList from "./WorkFlowList";
 
 const WorkFlows = ({ setSelectedLink, link }) => {
   const {
-    state: { currentUser },
+    state: { currentUser, products, companies },
     dispatch,
   } = useValue();
 
   useEffect(() => {
     setSelectedLink(link);
-    getProducts(dispatch);
-    getCompanies(dispatch);
-  }, [dispatch, link, setSelectedLink]);
+    if (products.length === 0) getProducts(dispatch);
+    if (companies.length === 0) getCompanies(dispatch);
+  }, [companies.length, dispatch, link, products.length, setSelectedLink]);
 
   return (
     <Box>

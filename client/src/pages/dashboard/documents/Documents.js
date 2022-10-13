@@ -9,13 +9,13 @@ import DocumentList from "./DocumentList";
 const Documents = ({ setSelectedLink, link }) => {
   const {
     dispatch,
-    state: { currentUser },
+    state: { currentUser, docs },
   } = useValue();
 
   useEffect(() => {
     setSelectedLink(link);
-    getDocument(dispatch);
-  }, [dispatch, link, setSelectedLink]);
+    if (docs.length === 0) getDocument(dispatch);
+  }, [dispatch, docs.length, link, setSelectedLink]);
   return (
     <Box>
       {currentUser.authority !== "Yetki Yok" && (
