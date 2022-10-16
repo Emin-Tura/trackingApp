@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect } from "react";
 import reducer from "./reducer";
 
 const initialState = {
+  render: false,
   currentUser: null,
   openLogin: false,
   loading: false,

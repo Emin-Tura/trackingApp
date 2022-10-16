@@ -116,6 +116,8 @@ const reducer = (state, action) => {
           (company) => company._id !== action.payload
         ),
       };
+    case "RE_RENDER":
+      return { ...state, render: !state.render };
   }
 };
 

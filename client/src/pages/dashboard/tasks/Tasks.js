@@ -17,24 +17,26 @@ import TasksList from "./TasksList";
 const Tasks = ({ setSelectedLink, link }) => {
   const {
     dispatch,
-    state: { currentUser, assigned, users },
+    state: { currentUser, assigned, render },
   } = useValue();
   const taskRef = useRef();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleTaskSubmit = useCallback((e) => {
-    const task = taskRef.current.value;
-    const newTask = { task, assigned, currentUser };
-
-    createTask(newTask, dispatch);
-    taskRef.current.value = "";
-  });
+  const handleTaskSubmit = useCallback(
+    (e) => {
+      const task = taskRef.current.value;
+      const newTask = { task, assigned, currentUser };
+      createTask(newTask, dispatch);
+      taskRef.current.value = "";
+    },
+    [assigned, currentUser, dispatch]
+  );
 
   useEffect(() => {
     setSelectedLink(link);
-    if (users.length === 0) getUsers(dispatch);
+    getUsers(dispatch);
     getTasks(dispatch);
-  }, [dispatch, link, setSelectedLink, handleTaskSubmit, users.length]);
+  }, [dispatch, link, setSelectedLink, handleTaskSubmit, render]);
 
   return (
     <Box>

@@ -6,9 +6,18 @@ const url = process.env.REACT_APP_SERVER_URL + "/user";
 
 export const login = async (user, dispatch) => {
   dispatch({ type: "START_LOADING" });
+
   const result = await fetchData({ url: url + "/login", body: user }, dispatch);
   if (result) {
-    dispatch({ type: "UPDATE_USER", payload: result });
+    dispatch({
+      type: "UPDATE_USER",
+      payload: result,
+    });
+  } else {
+    dispatch({
+      type: "UPDATE_USER",
+      payload: null,
+    });
   }
 
   dispatch({ type: "END_LOADING" });

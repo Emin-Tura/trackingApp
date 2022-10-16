@@ -39,27 +39,32 @@ const Calendar = ({ setSelectedLink, link }) => {
   const [locale] = useState("tr-TR");
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const commitChanges = useCallback(({ added, changed, deleted }) => {
-    if (added) {
-      setId(uuidv4());
-      createEvent({ added, id }, dispatch);
-    }
-    if (changed) {
-      events.map(
-        (appointment) =>
-          changed[appointment.id] &&
-          updateEvent(changed[appointment.id], appointment.id, dispatch)
-      );
-    }
-    if (deleted !== undefined) {
-      deleteEvent(deleted, dispatch);
-    }
-  });
+  const commitChanges = useCallback(
+    ({ added, changed, deleted }) => {
+      if (added) {
+        setId(uuidv4());
+        createEvent({ added, id }, dispatch);
+      }
+      if (changed) {
+        setId(uuidv4());
+        events.map(
+          (appointment) =>
+            changed[appointment.id] &&
+            updateEvent(changed[appointment.id], appointment.id, dispatch)
+        );
+      }
+      if (deleted !== undefined) {
+        setId(uuidv4());
+        deleteEvent(deleted, dispatch);
+      }
+    },
+    [dispatch, events, id]
+  );
 
   useEffect(() => {
     setSelectedLink(link);
-    if (events.length === 0) getEvents(dispatch);
-  }, [dispatch, link, setSelectedLink, commitChanges, events.length]);
+    getEvents(dispatch);
+  }, [dispatch, link, setSelectedLink, id]);
 
   return (
     <>

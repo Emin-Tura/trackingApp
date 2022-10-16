@@ -24,7 +24,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const TasksList = () => {
   const {
-    state: { tasks, currentUser },
+    state: { tasks, currentUser, render },
     dispatch,
   } = useValue();
 
@@ -48,10 +48,14 @@ const TasksList = () => {
               message: "Görev Başarıyla Güncellendi",
             },
           });
+          dispatch({
+            type: "RE_RENDER",
+            payload: !render,
+          });
         }
       }
     },
-    [currentUser, dispatch]
+    [currentUser, dispatch, render]
   );
 
   const handleDelete = useCallback(
@@ -60,9 +64,13 @@ const TasksList = () => {
       let text = "Görevi silmek istediğinize emin misiniz?";
       if (window.confirm(text)) {
         await deleteTask(_id, dispatch);
+        dispatch({
+          type: "RE_RENDER",
+          payload: !render,
+        });
       }
     },
-    [dispatch]
+    [dispatch, render]
   );
 
   return (
