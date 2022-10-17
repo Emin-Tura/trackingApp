@@ -1,33 +1,46 @@
-version: '3.8'
+version: '3'
 services:
   mongodb:
     image: mongo
+    container_name: mongodb
+    restart: always
     volumes:
       - data:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - mongodb
   server:
     build: ./server
-    ports:
-      - 5000:5000
+    container_name: server
+    restart: always
     volumes:
       - logs:/app/logs
       - ./server:/app
       - /app/node_modules
+    ports:
+      - 5000:5000
     depends_on:
       - mongodb
     environment:
       - MONGO_URL=mongodb://mongodb:27017
-
+    networks:
+      - server
   client:
     build: ./client
-    ports:
-      - 3000:3000
+    container_name: client
+    restart: always
     volumes:
       - ./client:/app
       - /app/node_modules
-    stdin_open: true
-    tty: true
-    depends_on:
-      - server
+    ports:
+      - 3000:3000
+    networks:
+      - client
+networks:
+  server:
+  client:
+  mongodb:
 volumes:
   data:
   logs:
