@@ -1,6 +1,6 @@
 FROM node:lts-buster as builder
 
-WORKDIR /app
+WORKDIR /
 
 COPY package.json package-lock.json ./
 

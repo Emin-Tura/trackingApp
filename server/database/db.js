@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 
-console.log(process.env.MONGO_URI);
 const startServer = async () => {
-  const connect = await mongoose.connect(process.env.MONGO_URI, {
+  const connect = await mongoose.connect("mongodb://admin:password@mongodb", {
     dbName: process.env.DB_NAME,
     useNewUrlParser: true,
     useUnifiedTopology: true,
