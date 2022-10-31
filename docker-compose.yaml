@@ -1,46 +1,65 @@
-version: '3'
+version: "3.9"
+
 services:
-  mongodb:
-    image: mongo
-    container_name: mongodb
-    restart: always
-    volumes:
-      - data:/data/db
-    ports:
-      - 27017:27017
-    networks:
-      - mongodb
   server:
-    build: ./server
-    container_name: server
     restart: always
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: project_backend
+    # volumes allow sharing of data in run-time between host and container
     volumes:
-      - logs:/app/logs
-      - ./server:/app
+      # don't overwrite this folder in container with the local one
       - /app/node_modules
-    ports:
-      - 5000:5000
+      # map current local directory to the /app inside the container
+      #This is a must for development in order to update our container whenever a change to the source code is made. Without this, you would have to rebuild the image each time you make a change to source code.
+
+      - ./server:/app
+    # ports:
+    #    - 5000:5000
     depends_on:
       - mongodb
     environment:
-      - MONGO_URL=mongodb://mongodb:27017
+      NODE_ENV: ${NODE_ENV}
+      MONGO_URI: mongodb://${MONGO_ROOT_USERNAME}:${MONGO_ROOT_PASSWORD}@mongodb
     networks:
-      - server
-  client:
-    build: ./client
-    container_name: client
-    restart: always
-    volumes:
-      - ./client:/app
-      - /app/node_modules
-    ports:
-      - 3000:3000
-    networks:
-      - client
-networks:
-  server:
-  client:
+      - project-network
+
   mongodb:
+    image: mongo
+    container_name: project_mongodb
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+    volumes:
+      # for persistence storage
+      - mongodb-data:/data/db
+    networks:
+      - project-network
+
+  client:
+    restart: always
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: project_frontend
+    volumes:
+      - ./app/node_modules
+      - ./client:/app
+    # ports:
+    #    - 3000:3000
+    depends_on:
+      - server
+    networks:
+      - project-network
+
+networks:
+  project-network:
+    driver: bridge
+
 volumes:
-  data:
-  logs:
+  mongodb-data:
+    driver: local

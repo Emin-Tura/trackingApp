@@ -8,10 +8,12 @@ import taskRouter from "./routes/taskRouter.js";
 import documentRouter from "./routes/documentRouter.js";
 import eventRouter from "./routes/eventRouter.js";
 import companyRouter from "./routes/companyRouter.js";
+import startServer from "./database/db.js";
 
 dotenv.config();
-const port = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 const app = express();
+startServer();
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", process.env.CLIENT_URL);
@@ -38,17 +40,7 @@ app.use("/", (req, res) =>
   res.status(404).json({ succes: false, message: "Not Found" })
 );
 
-const startServer = async () => {
-  try {
-    await mongoose.connect("mongodb://localhost:27017", {
-      dbName: "cypoint",
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    app.listen(port, () => console.log(`Server is listening on port: ${port}`));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-startServer();
+const server = app.listen(
+  PORT,
+  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
+);
