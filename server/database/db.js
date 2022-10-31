@@ -1,15 +1,12 @@
 import mongoose from "mongoose";
 
+console.log(process.env.MONGO_URI);
 const startServer = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      dbName: process.env.DB_NAME,
-      useNewUrlParser: true,
-      useCreateIndex: true,
-    });
-    app.listen(port, () => console.log(`Server is listening on port: ${port}`));
-  } catch (error) {
-    console.log(error);
-  }
+  const connect = await mongoose.connect(process.env.MONGO_URI, {
+    dbName: process.env.DB_NAME,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  console.log(`MongoDB connected: ${connect.connection.host}`);
 };
 export default startServer;
