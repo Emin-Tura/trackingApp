@@ -20,5 +20,5 @@ export const downloadDocument = tryCatch(async (req, res) => {
   const document = await Document.find({
     $or: [{ file: { $regex: req.params.download } }],
   });
-  res.download(`../client/public/uploads/${document[0].file}`);
+  res.download(`./public/uploads/${document[0].file}`);
 });

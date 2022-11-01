@@ -12,7 +12,7 @@ var uniqueId = uuidv4();
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, "../client/public/uploads/");
+    callback(null, "./public/uploads/");
   },
   filename: (req, file, callback) => {
     callback(null, Date.now() + file.originalname);
