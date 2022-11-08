@@ -171,7 +171,7 @@ const DocumentList = () => {
               <ImageListItemBar
                 subtitle={
                   <Tooltip
-                    title={`Bu doküman ${file.user} tarafından yüklenmiştir.`}
+                    title={`${file.title} dokümanı, ${file.user} tarafından yüklenmiştir.`}
                     sx={{
                       color: "rgba(255, 255, 255, 0.54)",
                     }}

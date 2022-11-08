@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3"
 
 services:
   server:
@@ -44,7 +44,8 @@ services:
       - ./app/node_modules
       - ./client:/app
     ports:
-      - 3000:3000
+      - 80:80
+      - 443:443
     depends_on:
       - server
     networks:
@@ -52,7 +53,6 @@ services:
   # nginx:
   #   restart: always
   #   depends_on:
-  #     - server
   #     - client
   #   build:
   #     context: ./nginx

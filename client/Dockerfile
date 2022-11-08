@@ -8,12 +8,42 @@ RUN npm install --save --legacy-peer-deps
 
 COPY . .
 
+ENV NODE_ENV=production
+
+RUN npm build
+
+
 EXPOSE 3000
 
-CMD ["npm", "start"]
+#
+# Stage 2: Nginx as a proxy & static file server
+#
+FROM nginx:1.23.0
 
-# FROM nginx
+# Set working directory to nginx asset directory
+WORKDIR /usr/share/nginx/html
 
+RUN apt-get update && apt-get install -y certbot python3-certbot-nginx vim
 
-# COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-# COPY --from=builder /app/build /usr/share/nginx/html
+# Remove default nginx configuration
+RUN rm /etc/nginx/conf.d/*
+
+# Remove default nginx static assets
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copy static assets from builder stage
+COPY --from=client /client/build .
+
+# Update the nginx config with our own config file
+COPY --from=client /client/mern-template.conf /etc/nginx/conf.d/
+
+EXPOSE 80
+
+RUN useradd -ms /bin/bash nonroot
+
+RUN chown -R nonroot:nonroot /etc/nginx/conf.d/ /var/cache/nginx/ /var/run/
+
+USER nonroot
+
+# Containers run nginx with global directives and daemon off
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
