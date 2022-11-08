@@ -1,18 +1,16 @@
 FROM node:lts-buster as builder
 
-WORKDIR /
+WORKDIR /app
 
 COPY package.json package-lock.json ./
 
 RUN npm install --save --legacy-peer-deps
 
-RUN npm install -g serve
-
 COPY . .
 
 EXPOSE 3000
 
-CMD ["serve", "-s", "build"]
+CMD ["npm", "start"]
 
 # FROM nginx
 
