@@ -50,18 +50,6 @@ services:
       - server
     networks:
       - project-network
-  # nginx:
-  #   restart: always
-  #   depends_on:
-  #     - client
-  #   build:
-  #     context: ./nginx
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - 8080:80
-  #   networks:
-  #     - project-network
-
 networks:
   project-network:
     driver: bridge

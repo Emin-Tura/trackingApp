@@ -1,6 +1,6 @@
 FROM node:lts-buster as builder
 
-WORKDIR /app
+WORKDIR /client
 
 COPY package.json package-lock.json ./
 
@@ -8,9 +8,9 @@ RUN npm install --save --legacy-peer-deps
 
 COPY . .
 
-ENV NODE_ENV=production
+ENV REACT_APP_SERVER_URL=production
 
-RUN npm build
+RUN npm run build
 
 
 EXPOSE 3000
@@ -32,10 +32,10 @@ RUN rm /etc/nginx/conf.d/*
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy static assets from builder stage
-COPY --from=client /client/build .
+COPY --from=builder /client/build .
 
 # Update the nginx config with our own config file
-COPY --from=client /client/mern-template.conf /etc/nginx/conf.d/
+COPY --from=builder /client/mern-template.conf /etc/nginx/conf.d/
 
 EXPOSE 80
 
