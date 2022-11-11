@@ -1,5 +1,5 @@
 import { Add } from "@mui/icons-material";
-import { Box, Button } from "@mui/material";
+import { Alert, Box, Button, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { getDocument } from "../../../actions/document";
 import { useValue } from "../../../context/ContextProvider";
@@ -18,6 +18,12 @@ const Documents = ({ setSelectedLink, link }) => {
   }, [dispatch, docs.length, link, setSelectedLink]);
   return (
     <Box>
+      <Typography sx={{ textAlign: "center", mb: 3, width: "50%" }}>
+        <Alert severity="info">
+          Bazı dokümanların yüklenmesinde hata var ilerleyen süreçlerde
+          çözülecek...
+        </Alert>
+      </Typography>
       {currentUser.authority !== "Yetki Yok" && (
         <Button
           variant="contained"
