@@ -118,6 +118,12 @@ const reducer = (state, action) => {
       };
     case "RE_RENDER":
       return { ...state, render: !state.render };
+
+    case "UPDATE_PERSON_NAME":
+      return {
+        ...state,
+        personName: action.payload,
+      };
   }
 };
 

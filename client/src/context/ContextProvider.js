@@ -20,6 +20,7 @@ const initialState = {
   assigned: null,
   companies: [],
   company: null,
+  personName: [],
 };
 
 const Context = createContext(initialState);

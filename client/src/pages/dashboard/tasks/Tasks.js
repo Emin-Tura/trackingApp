@@ -28,6 +28,7 @@ const Tasks = ({ setSelectedLink, link }) => {
       const newTask = { task, assigned, currentUser };
       createTask(newTask, dispatch);
       taskRef.current.value = "";
+      dispatch({ type: "UPDATE_PERSON_NAME", payload: [] });
     },
     [assigned, currentUser, dispatch]
   );

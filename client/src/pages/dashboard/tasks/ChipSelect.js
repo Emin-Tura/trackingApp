@@ -33,18 +33,19 @@ function getStyles(name, personName, theme) {
 
 const ChipSelect = () => {
   const {
-    state: { users },
+    state: { users, personName },
     dispatch,
   } = useValue();
 
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
+  // const [personName, setPersonName] = React.useState([]);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setPersonName(typeof value === "string" ? value.split(",") : value);
+    // setPersonName(typeof value === "string" ? value.split(",") : value);
+    dispatch({ type: "UPDATE_PERSON_NAME", payload: value });
     dispatch({ type: "SET_ASSIGNEE", payload: value });
   };
 
