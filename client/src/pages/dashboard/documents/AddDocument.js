@@ -31,8 +31,6 @@ const AddDocument = () => {
   } = useValue();
 
   const [error, setError] = useState(false);
-  const statusRef = React.useRef();
-  const loadTotalRef = React.useRef();
   const document = new FormData();
   document.append("title", title);
   document.append("file", file);
@@ -82,15 +80,8 @@ const AddDocument = () => {
       setError(true);
     } else {
       setError(false);
-      var xhr = new XMLHttpRequest();
-      xhr.upload.addEventListener("progress", ProgressHandler, false);
       dispatch({ type: "UPDATE_FILES", payload: file });
     }
-  };
-  const ProgressHandler = (e) => {
-    loadTotalRef.current.innerHTML = `uploaded ${e.loaded} bytes of ${e.total}`;
-    var percent = (e.loaded / e.total) * 100;
-    statusRef.current.innerHTML = Math.round(percent) + "% uploaded...";
   };
   return (
     <Dialog
@@ -141,8 +132,6 @@ const AddDocument = () => {
               variant="outlined"
               onChange={handleChange}
             />
-            <p ref={statusRef}></p>
-            <p ref={loadTotalRef}></p>
           </DialogContent>
 
           <Button

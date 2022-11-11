@@ -8,8 +8,6 @@ RUN npm install --save --legacy-peer-deps
 
 COPY . .
 
-ENV REACT_APP_SERVER_URL=production
-
 RUN npm run build
 
 
@@ -18,12 +16,10 @@ EXPOSE 3000
 #
 # Stage 2: Nginx as a proxy & static file server
 #
-FROM nginx:1.23.0
+FROM nginx
 
 # Set working directory to nginx asset directory
 WORKDIR /usr/share/nginx/html
-
-RUN apt-get update && apt-get install -y certbot python3-certbot-nginx vim
 
 # Remove default nginx configuration
 RUN rm /etc/nginx/conf.d/*
