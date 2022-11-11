@@ -48,6 +48,7 @@ export const deleteDocument = async (currentUser, params, dispatch) => {
       url: `${url}/${params._id}`,
       method: "DELETE",
       token: currentUser?.token,
+      body: params,
     },
     dispatch
   );
