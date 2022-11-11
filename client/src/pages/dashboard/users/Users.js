@@ -1,12 +1,99 @@
 import { useEffect, useMemo, useState } from "react";
-import { Avatar, Box, Button, Typography } from "@mui/material";
-import { DataGrid, gridClasses } from "@mui/x-data-grid";
+import PropTypes from "prop-types";
+import { Avatar, Box, Button, MenuItem, Typography } from "@mui/material";
+import {
+  DataGrid,
+  gridClasses,
+  GridCsvExportMenuItem,
+  gridFilteredSortedRowIdsSelector,
+  GridToolbarContainer,
+  GridToolbarExportContainer,
+  gridVisibleColumnFieldsSelector,
+  trTR,
+  useGridApiContext,
+} from "@mui/x-data-grid";
 import { useValue } from "../../../context/ContextProvider";
 import { getUsers } from "../../../actions/user";
 import moment from "moment";
 import UsersActions from "./UsersActions";
 import { PersonAddAlt } from "@mui/icons-material";
 import CreateUser from "./CreateUser";
+
+const getJson = (apiRef) => {
+  // Select rows and columns
+  const filteredSortedRowIds = gridFilteredSortedRowIdsSelector(apiRef);
+  const visibleColumnsField = gridVisibleColumnFieldsSelector(apiRef);
+
+  // Format the data. Here we only keep the value
+  const data = filteredSortedRowIds.map((id) => {
+    const row = {};
+    visibleColumnsField.forEach((field) => {
+      row[field] = apiRef.current.getCellParams(id, field).value;
+    });
+    return row;
+  });
+
+  // Stringify with some indentation
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#parameters
+  return JSON.stringify(data, null, 2);
+};
+
+const exportBlob = (blob, filename) => {
+  // Save the blob in a json file
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+
+  setTimeout(() => {
+    URL.revokeObjectURL(url);
+  });
+};
+
+const JsonExportMenuItem = (props) => {
+  const apiRef = useGridApiContext();
+
+  const { hideMenu } = props;
+
+  return (
+    <MenuItem
+      onClick={() => {
+        const jsonString = getJson(apiRef);
+        const blob = new Blob([jsonString], {
+          type: "text/json",
+        });
+
+        exportBlob(blob, "DataGrid_demo.json");
+
+        // Hide the export menu after the export
+        hideMenu?.();
+      }}
+    >
+      Export JSON
+    </MenuItem>
+  );
+};
+
+JsonExportMenuItem.propTypes = {
+  hideMenu: PropTypes.func,
+};
+
+const csvOptions = { delimiter: ";" };
+
+const CustomExportButton = (props) => (
+  <GridToolbarExportContainer {...props}>
+    <GridCsvExportMenuItem options={csvOptions} />
+    <JsonExportMenuItem />
+  </GridToolbarExportContainer>
+);
+
+const CustomToolbar = (props) => (
+  <GridToolbarContainer {...props}>
+    <CustomExportButton />
+  </GridToolbarContainer>
+);
 
 const Users = ({ setSelectedLink, link }) => {
   const {
@@ -17,6 +104,7 @@ const Users = ({ setSelectedLink, link }) => {
   const [pageSize, setPageSize] = useState(5);
   const [rowId, setRowId] = useState(null);
   const [currentRowId, setCurrentRowId] = useState(null);
+
   useEffect(() => {
     setSelectedLink(link);
     if (users.length === 0) getUsers(dispatch);
@@ -101,7 +189,7 @@ const Users = ({ setSelectedLink, link }) => {
     <>
       <Box
         sx={{
-          height: 450,
+          height: 500,
           width: "100%",
         }}
       >
@@ -139,6 +227,8 @@ const Users = ({ setSelectedLink, link }) => {
           onCellEditCommit={(params) => setRowId(params.id)}
           onCellClick={(params) => setCurrentRowId(params.id)}
           isCellEditable={(params) => currentUser.authority === "Tam Yetki"}
+          components={{ Toolbar: CustomToolbar }}
+          localeText={trTR.components.MuiDataGrid.defaultProps.localeText}
         />
 
         {currentUser.authority !== "Yetki Yok" && (
