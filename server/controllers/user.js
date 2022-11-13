@@ -115,3 +115,12 @@ export const deleteUser = tryCatch(async (req, res) => {
   const { _id } = await User.findByIdAndDelete(req.params.userId);
   res.status(200).json({ success: true, result: { _id } });
 });
+
+export const updatePassword = tryCatch(async (req, res) => {
+  const { password } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 12);
+  const { _id } = await User.findByIdAndUpdate(req.params.userId, {
+    password: hashedPassword,
+  });
+  res.status(200).json({ success: true, result: { _id } });
+});

@@ -24,6 +24,7 @@ import {
   Task,
   DocumentScanner,
   AccountTree,
+  Settings,
 } from "@mui/icons-material";
 import { useValue } from "../../context/ContextProvider";
 import { useNavigate, Routes, Route } from "react-router-dom";
@@ -35,6 +36,7 @@ import Tasks from "./tasks/Tasks";
 import logo from "../../assets/logo1.png";
 import Documents from "./documents/Documents";
 import WorkFlows from "./workflow/WorkFlows";
+import Setting from "./Settings";
 
 const drawerWidth = 280;
 
@@ -215,11 +217,24 @@ const SideList = ({ open, setOpen }) => {
               <Typography variant="body2">{currentUser?.email}</Typography>
             </>
           )}
-          <Tooltip title="Çıkış" sx={{ mt: 1 }}>
-            <IconButton onClick={handleLogout}>
-              <Logout />
-            </IconButton>
-          </Tooltip>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: open ? "row" : "column",
+            }}
+          >
+            <Tooltip title="Ayarlar" sx={{ mt: 1 }}>
+              <IconButton onClick={() => dispatch({ type: "OPEN_SETTINGS" })}>
+                <Settings />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Çıkış" sx={{ mt: 1 }}>
+              <IconButton onClick={handleLogout}>
+                <Logout />
+              </IconButton>
+            </Tooltip>
+          </Box>
         </Box>
         <Box
           sx={{
@@ -253,6 +268,7 @@ const SideList = ({ open, setOpen }) => {
           ))}
         </Routes>
       </Box>
+      <Setting />
     </>
   );
 };

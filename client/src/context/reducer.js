@@ -4,6 +4,10 @@ const reducer = (state, action) => {
       return { ...state, openLogin: true };
     case "CLOSE_LOGIN":
       return { ...state, openLogin: false };
+    case "OPEN_SETTINGS":
+      return { ...state, openSettings: true };
+    case "CLOSE_SETTINGS":
+      return { ...state, openSettings: false };
     case "START_LOADING":
       return { ...state, loading: true };
     case "END_LOADING":

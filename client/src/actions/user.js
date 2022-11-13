@@ -122,3 +122,28 @@ export const deleteUser = async (user, currentUser, dispatch) => {
   }
   dispatch({ type: "END_LOADING" });
 };
+
+export const updatePassword = async (user, userId, dispatch) => {
+  dispatch({ type: "START_LOADING" });
+
+  const result = await fetchData(
+    {
+      url: `${url}/updatePassword/${userId}`,
+      method: "PATCH",
+      body: user,
+    },
+    dispatch
+  );
+  if (result) {
+    dispatch({
+      type: "UPDATE_ALERT",
+      payload: {
+        open: true,
+        severity: "success",
+        message: "Parola Güncellendi",
+      },
+    });
+  }
+  dispatch({ type: "END_LOADING" });
+  dispatch({ type: "CLOSE_SETTINGS" });
+};

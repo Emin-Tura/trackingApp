@@ -5,6 +5,7 @@ const initialState = {
   render: false,
   currentUser: null,
   openLogin: false,
+  openSettings: false,
   loading: false,
   alert: { open: false, severity: "info", message: "" },
   users: [],
