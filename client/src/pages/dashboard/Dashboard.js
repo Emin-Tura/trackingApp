@@ -34,7 +34,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 export default function Dashboard() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const [dark, setDark] = React.useState(true);
 
   const darkTheme = useMemo(

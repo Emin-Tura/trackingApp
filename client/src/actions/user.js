@@ -125,7 +125,6 @@ export const deleteUser = async (user, currentUser, dispatch) => {
 
 export const updatePassword = async (user, userId, dispatch) => {
   dispatch({ type: "START_LOADING" });
-
   const result = await fetchData(
     {
       url: `${url}/updatePassword/${userId}`,
@@ -143,7 +142,7 @@ export const updatePassword = async (user, userId, dispatch) => {
         message: "Parola Güncellendi",
       },
     });
+    dispatch({ type: "CLOSE_SETTINGS" });
   }
   dispatch({ type: "END_LOADING" });
-  dispatch({ type: "CLOSE_SETTINGS" });
 };

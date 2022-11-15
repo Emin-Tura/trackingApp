@@ -102,6 +102,7 @@ export const createUser = tryCatch(async (req, res) => {
       id,
       name,
       email: user.email,
+      password: hashedPassword,
       tempPhotoURL,
       token,
       role,
@@ -117,7 +118,18 @@ export const deleteUser = tryCatch(async (req, res) => {
 });
 
 export const updatePassword = tryCatch(async (req, res) => {
-  const { password } = req.body;
+  const { password, oldPassword, email } = req.body;
+  const emailLowerCase = email.toLowerCase();
+  const existedUser = await User.findOne({ email: emailLowerCase });
+  const correctPassword = await bcrypt.compare(
+    oldPassword,
+    existedUser.password
+  );
+  if (!correctPassword)
+    return res.status(400).json({
+      success: false,
+      message: "Girilen Şifre Yanlış",
+    });
   const hashedPassword = await bcrypt.hash(password, 12);
   const { _id } = await User.findByIdAndUpdate(req.params.userId, {
     password: hashedPassword,

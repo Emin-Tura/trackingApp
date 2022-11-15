@@ -18,7 +18,10 @@ const Documents = ({ setSelectedLink, link }) => {
   }, [dispatch, render, link, setSelectedLink]);
   return (
     <Box>
-      <Typography sx={{ textAlign: "center", mb: 3, width: "50%" }}>
+      <Typography
+        component={"h3"}
+        sx={{ textAlign: "center", mb: 3, width: "50%" }}
+      >
         <Alert severity="info">
           Bazı dokümanların yüklenmesinde hata var ilerleyen süreçlerde
           çözülecek...

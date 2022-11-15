@@ -18,7 +18,7 @@ export const createDocument = async (document, dispatch) => {
       });
 
       dispatch({ type: "RESET_DETAIL" });
-      dispatch({ type: "RE_RENDER" });
+      window.location.reload();
     }
   } catch {
     dispatch({

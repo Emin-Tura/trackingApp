@@ -24,6 +24,7 @@ const Settings = () => {
     dispatch,
   } = useValue();
 
+  const oldPasswordRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
   const handleClose = () => {
@@ -34,6 +35,7 @@ const Settings = () => {
     e.preventDefault();
     const password = passwordRef.current.value;
     const confirmPassword = confirmPasswordRef.current.value;
+    const oldPassword = oldPasswordRef.current.value;
     if (password !== confirmPassword)
       return dispatch({
         type: "UPDATE_ALERT",
@@ -44,9 +46,9 @@ const Settings = () => {
         },
       });
 
-    const { id } = currentUser;
+    const { id, email } = currentUser;
 
-    updatePassword({ password }, id, dispatch);
+    updatePassword({ password, oldPassword, email }, id, dispatch);
   };
 
   return (
@@ -94,9 +96,16 @@ const Settings = () => {
 
           <PasswordField
             autoFocus
-            {...{ passwordRef }}
+            passwordRef={oldPasswordRef}
+            variant={"standard"}
+            label="Parola"
+            id="oldPassword"
+          />
+          <PasswordField
+            passwordRef={passwordRef}
             variant={"standard"}
             label="Yeni Parola"
+            id="password"
           />
 
           <PasswordField
