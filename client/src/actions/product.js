@@ -17,7 +17,7 @@ export const createProduct = async (product, dispatch) => {
       },
     });
     dispatch({ type: "RESET_DETAIL" });
-    window.location.reload();
+    dispatch({ type: "RE_RENDER" });
   }
 
   dispatch({ type: "END_LOADING" });

@@ -44,22 +44,11 @@ const WorkFlowList = () => {
       if (currentUser.authority !== "Yetki Yok") {
         let text = "Süreci tamamlamak istediğinize emin misiniz?";
         if (window.confirm(text)) {
-          const result = await updateCompany(
+          updateCompany(
             { completed: true, completedEmail: email, completedName: name },
             _id,
             dispatch
           );
-          if (result) {
-            dispatch({
-              type: "UPDATE_ALERT",
-              payload: {
-                open: true,
-                severity: "success",
-                message: "Sürec Başarıyla Tamamlandı",
-              },
-            });
-            window.location.reload();
-          }
         }
       } else {
         dispatch({

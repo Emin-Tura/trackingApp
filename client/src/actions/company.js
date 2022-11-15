@@ -21,8 +21,8 @@ export const createCompany = async (company, dispatch) => {
         message: "Süreç Başarıyla Oluşturuldu",
       },
     });
-    window.location.reload();
     dispatch({ type: "CLOSE_LOGIN" });
+    dispatch({ type: "RE_RENDER" });
   }
 
   dispatch({ type: "END_LOADING" });
@@ -62,8 +62,8 @@ export const deleteCompany = async (currentUser, params, dispatch) => {
   dispatch({ type: "END_LOADING" });
 };
 
-export const updateCompany = (updateCompany, companyId, dispatch) => {
-  return fetchData(
+export const updateCompany = async (updateCompany, companyId, dispatch) => {
+  const result = await fetchData(
     {
       url: `${url}/updateCompany/${companyId}`,
       method: "PATCH",
@@ -71,4 +71,15 @@ export const updateCompany = (updateCompany, companyId, dispatch) => {
     },
     dispatch
   );
+  if (result) {
+    dispatch({
+      type: "UPDATE_ALERT",
+      payload: {
+        open: true,
+        severity: "success",
+        message: "Süreç Tamamlandı",
+      },
+    });
+    dispatch({ type: "RE_RENDER" });
+  }
 };

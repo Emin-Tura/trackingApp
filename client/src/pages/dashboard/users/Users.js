@@ -97,7 +97,7 @@ const CustomToolbar = (props) => (
 
 const Users = ({ setSelectedLink, link }) => {
   const {
-    state: { users, currentUser },
+    state: { users, currentUser, render },
     dispatch,
   } = useValue();
 
@@ -107,8 +107,8 @@ const Users = ({ setSelectedLink, link }) => {
 
   useEffect(() => {
     setSelectedLink(link);
-    if (users.length === 0) getUsers(dispatch);
-  }, [dispatch, link, setSelectedLink, users.length, setRowId]);
+    getUsers(dispatch);
+  }, [dispatch, link, setSelectedLink, render, setRowId]);
 
   const columns = useMemo(
     () => [

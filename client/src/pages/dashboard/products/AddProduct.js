@@ -80,7 +80,7 @@ const AddProduct = () => {
             <Box>
               <InfoField
                 mainProps={{ name: "title", label: "Ürün Adı", value: title }}
-                minLength={5}
+                minLength={2}
               />
 
               <InfoField
@@ -100,7 +100,7 @@ const AddProduct = () => {
             variant="contained"
             endIcon={<DownloadDone />}
             sx={{ my: 2 }}
-            disabled={!(title.length > 4 && description.length > 9)}
+            disabled={!(title.length > 1 && description.length > 9)}
             onClick={handleSubmit}
           >
             Kaydet

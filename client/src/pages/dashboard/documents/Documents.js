@@ -9,13 +9,13 @@ import DocumentList from "./DocumentList";
 const Documents = ({ setSelectedLink, link }) => {
   const {
     dispatch,
-    state: { currentUser, docs },
+    state: { currentUser, render },
   } = useValue();
 
   useEffect(() => {
     setSelectedLink(link);
-    if (docs.length === 0) getDocument(dispatch);
-  }, [dispatch, docs.length, link, setSelectedLink]);
+    getDocument(dispatch);
+  }, [dispatch, render, link, setSelectedLink]);
   return (
     <Box>
       <Typography sx={{ textAlign: "center", mb: 3, width: "50%" }}>

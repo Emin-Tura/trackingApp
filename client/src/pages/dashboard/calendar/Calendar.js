@@ -38,7 +38,6 @@ const Calendar = ({ setSelectedLink, link }) => {
   const [currentViewName, setCurrentViewName] = useState();
   const [locale] = useState("tr-TR");
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const commitChanges = useCallback(
     ({ added, changed, deleted }) => {
       if (added) {

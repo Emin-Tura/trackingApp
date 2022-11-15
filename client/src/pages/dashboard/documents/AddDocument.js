@@ -40,7 +40,6 @@ const AddDocument = () => {
     createDocument(document, dispatch);
     dispatch({ type: "CLOSE_LOGIN" });
     dispatch({ type: "RESET_DETAIL" });
-    window.location.reload();
   };
 
   const handleClose = () => {
