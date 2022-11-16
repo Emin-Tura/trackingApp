@@ -153,7 +153,7 @@ const Users = ({ setSelectedLink, link }) => {
         headerName: "Kayıt Tarihi",
         width: 150,
         renderCell: (params) =>
-          moment(params?.row?.createdAt).format("YYYY-MM-DD HH:MM:SS"),
+          moment(params?.row?.createdAt).format("YYYY-MM-DD H:mm:ss"),
       },
       {
         field: "updatedAt",
