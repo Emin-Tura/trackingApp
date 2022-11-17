@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { green } from "@mui/material/colors";
 import { deleteUser, updateStatus } from "../../../actions/user";
 import { useValue } from "../../../context/ContextProvider";
+import { useNavigate } from "react-router-dom";
 
 const UsersActions = ({ params, rowId, setRowId, currentRowId }) => {
   const {
@@ -44,10 +45,20 @@ const UsersActions = ({ params, rowId, setRowId, currentRowId }) => {
     setLoading(false);
   };
 
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch({ type: "UPDATE_USER", payload: null });
+    navigate("/");
+  };
+
   const handleDelete = () => {
     if (currentUser.authority === "Tam Yetki") {
       let text = "Kişiyi Silmek istediğinize emin misiniz?";
       if (window.confirm(text)) {
+        if (currentUser.email === params.row.email) {
+          handleLogout();
+        }
         deleteUser(params.row, currentUser, dispatch);
       }
     } else {

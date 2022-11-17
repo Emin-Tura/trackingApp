@@ -135,7 +135,7 @@ const TasksList = () => {
                     color: `${task.completed ? "#696969" : "#48cae4"}`,
                   }}
                 >
-                  {`@${task.assigned} :`}
+                  {`- ${task.assigned} :`}
                 </span>
                 <span>{task.task}</span>
               </Item>

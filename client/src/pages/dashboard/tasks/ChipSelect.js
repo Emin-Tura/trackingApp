@@ -31,7 +31,7 @@ function getStyles(name, personName, theme) {
   };
 }
 
-const ChipSelect = () => {
+const ChipSelect = ({ required }) => {
   const {
     state: { users, personName },
     dispatch,
@@ -70,6 +70,7 @@ const ChipSelect = () => {
             </Box>
           )}
           MenuProps={MenuProps}
+          required={required}
         >
           {users.map(
             (name) =>

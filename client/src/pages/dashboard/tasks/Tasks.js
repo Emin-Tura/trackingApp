@@ -24,6 +24,7 @@ const Tasks = ({ setSelectedLink, link }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleTaskSubmit = useCallback(
     (e) => {
+      e.preventDefault();
       const task = taskRef.current.value;
       const newTask = { task, assigned, currentUser };
       createTask(newTask, dispatch);
@@ -50,26 +51,28 @@ const Tasks = ({ setSelectedLink, link }) => {
       </Typography>
 
       {currentUser.authority === "Tam Yetki" && (
-        <Container sx={{ width: "75%", display: "flex", alignItems: "center" }}>
-          <TextField
-            margin="normal"
-            variant="standard"
-            id="task"
-            label="Lütfen Görevi Giriniz"
-            type="text"
-            fullWidth
-            inputRef={taskRef}
-            inputProps={{ minLength: 2 }}
-            multiline
-          />
-          <ChipSelect />
-          <IconButton
-            onClick={handleTaskSubmit}
-            disabled={!taskRef.current?.value}
+        <form onSubmit={handleTaskSubmit}>
+          <Container
+            sx={{ width: "75%", display: "flex", alignItems: "center" }}
           >
-            <Check />
-          </IconButton>
-        </Container>
+            <TextField
+              margin="normal"
+              variant="standard"
+              id="task"
+              label="Lütfen Görevi Giriniz"
+              type="text"
+              fullWidth
+              multiline
+              inputRef={taskRef}
+              inputProps={{ minLength: 2 }}
+              required
+            />
+            <ChipSelect required={true} />
+            <IconButton type="submit">
+              <Check />
+            </IconButton>
+          </Container>
+        </form>
       )}
 
       <Divider sx={{ my: 2, opacity: 0.8 }} />
