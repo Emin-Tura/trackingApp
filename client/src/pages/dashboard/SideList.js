@@ -164,7 +164,8 @@ const SideList = ({ open, setOpen }) => {
             <ListItem key={item.title} disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={{
-                  minHeight: 48,
+                  height: 40,
+                  width: "100%",
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                 }}
@@ -194,7 +195,7 @@ const SideList = ({ open, setOpen }) => {
             <Avatar
               src={currentUser?.photoURL}
               alt={currentUser?.name}
-              {...(open && { sx: { width: 50, height: 50 } })}
+              {...(open && { sx: { width: 45, height: 45 } })}
             >
               {currentUser?.name?.charAt(0).toUpperCase()}
             </Avatar>
@@ -240,12 +241,10 @@ const SideList = ({ open, setOpen }) => {
           sx={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center",
+            justifyContent: "flex-end",
             alignItems: "center",
-            position: "absolute",
-            bottom: 3,
-            left: "50%",
-            transform: "translateX(-50%)",
+            height: "100%",
+            mb: 1,
           }}
         >
           <img src={logo} alt={"logo"} width="50" height="50" />

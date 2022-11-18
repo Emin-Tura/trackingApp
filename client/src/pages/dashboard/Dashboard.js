@@ -6,19 +6,13 @@ import {
   Typography,
   IconButton,
   Tooltip,
-  Badge,
 } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
-import {
-  Brightness4,
-  Brightness7,
-  Home,
-  Menu,
-  Notifications,
-} from "@mui/icons-material";
+import { Brightness4, Brightness7, Home, Menu } from "@mui/icons-material";
 import React, { useMemo } from "react";
 import SideList from "./SideList";
 import { useNavigate } from "react-router-dom";
+import NotificationBell from "../../components/NotificationBell";
 
 const drawerWidth = 280;
 
@@ -91,15 +85,7 @@ export default function Dashboard() {
             >
               Dashboard
             </Typography>
-            <IconButton
-              size="large"
-              color="inherit"
-              onClick={() => console.log("dialog açılacak")}
-            >
-              <Badge color="error" badgeContent={2}>
-                <Notifications />
-              </Badge>
-            </IconButton>
+            <NotificationBell />
             <IconButton onClick={() => setDark(!dark)}>
               {dark ? <Brightness7 /> : <Brightness4 />}
             </IconButton>
