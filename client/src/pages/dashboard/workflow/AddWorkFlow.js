@@ -23,7 +23,7 @@ const Transition = forwardRef((props, ref) => {
   return <Slide direction="left" ref={ref} {...props} />;
 });
 
-const AddCompany = () => {
+const AddWorkFlow = () => {
   const {
     state: { openLogin },
     dispatch,
@@ -155,6 +155,7 @@ const AddCompany = () => {
                 type="phone"
                 inputRef={phoneRef}
                 forceCallingCode
+                defaultCountry="TR"
               />
             </Stack>
 
@@ -221,4 +222,4 @@ const AddCompany = () => {
   );
 };
 
-export default AddCompany;
+export default AddWorkFlow;

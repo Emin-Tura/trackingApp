@@ -19,10 +19,15 @@ const NotificationBell = () => {
     state: { tasks, currentUser },
   } = useValue();
 
-  const badgeContent = tasks.map((task) => console.log(task));
+  const badgeContent = tasks
+    .filter((e) => e.completed === false)
+    .map((task) =>
+      task.assigned.filter((name) => name === currentUser.name).length ? 1 : 0
+    )
+    .reduce((a, b) => a + b, 0);
 
-  const newNotifications = `${badgeContent} yeni bildiriminiz var!`;
-  const noNotifications = "Yeni bildiriminiz yok!";
+  const newNotifications = `${badgeContent} yeni göreviniz var!`;
+  const noNotifications = "Yeni görev yok!";
 
   return (
     <PopupState variant="popover" popupId="demo-popup-popover">
@@ -31,7 +36,7 @@ const NotificationBell = () => {
           <IconButton
             size="large"
             color={badgeContent > 0 ? "primary" : "inherit"}
-            {...bindTrigger(popupState)}
+            {...bindTrigger(badgeContent > 0 && popupState)}
           >
             <Tooltip title={badgeContent ? newNotifications : noNotifications}>
               <Badge color="error" badgeContent={badgeContent}>
@@ -63,7 +68,7 @@ const NotificationBell = () => {
             >
               {tasks
                 .filter((e) => e.completed === false)
-                .slice(0, 4)
+                .slice(0, 6)
                 .map((task) =>
                   task.assigned.filter((name) => name === currentUser.name)
                     .length ? (

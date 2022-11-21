@@ -3,7 +3,7 @@ import { Box, Button } from "@mui/material";
 import React, { useEffect } from "react";
 import { getCompanies } from "../../../actions/company";
 import { useValue } from "../../../context/ContextProvider";
-import AddCompany from "./AddCompany";
+import AddWorkFlow from "./AddWorkFlow";
 import WorkFlow from "./WorkFlow";
 import WorkFlowList from "./WorkFlowList";
 
@@ -29,7 +29,7 @@ const WorkFlows = ({ setSelectedLink, link }) => {
           Süreç Oluştur
         </Button>
       )}
-      <AddCompany />
+      <AddWorkFlow />
       <WorkFlowList />
       <WorkFlow />
     </Box>
