@@ -21,7 +21,6 @@ const Tasks = ({ setSelectedLink, link }) => {
   } = useValue();
   const taskRef = useRef();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleTaskSubmit = useCallback(
     (e) => {
       e.preventDefault();

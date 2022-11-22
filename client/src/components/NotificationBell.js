@@ -8,16 +8,19 @@ import {
   Popover,
   Tooltip,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
 import { useValue } from "../context/ContextProvider";
 import { Box } from "@mui/system";
 import moment from "moment";
+import NotificationSound from "./notificationSound.mp3";
 
 const NotificationBell = () => {
   const {
     state: { tasks, currentUser },
   } = useValue();
+
+  const audioPlayer = useRef(null);
 
   const badgeContent = tasks
     .filter((e) => e.completed === false)
@@ -28,6 +31,11 @@ const NotificationBell = () => {
 
   const newNotifications = `${badgeContent} yeni göreviniz var!`;
   const noNotifications = "Yeni görev yok!";
+
+  useEffect(() => {
+    if (badgeContent === 0) audioPlayer.current.pause();
+    else if (badgeContent > badgeContent - 1) audioPlayer.current.play();
+  }, [badgeContent]);
 
   return (
     <PopupState variant="popover" popupId="demo-popup-popover">
@@ -44,6 +52,7 @@ const NotificationBell = () => {
               </Badge>
             </Tooltip>
           </IconButton>
+          <audio ref={audioPlayer} src={NotificationSound} />
           <Popover
             {...bindPopover(popupState)}
             anchorOrigin={{
