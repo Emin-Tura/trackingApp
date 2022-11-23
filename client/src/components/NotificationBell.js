@@ -34,7 +34,9 @@ const NotificationBell = () => {
 
   useEffect(() => {
     if (badgeContent === 0) audioPlayer.current.pause();
-    else if (badgeContent > badgeContent - 1) audioPlayer.current.play();
+    else {
+      audioPlayer.current.play();
+    }
   }, [badgeContent]);
 
   return (

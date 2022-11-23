@@ -9,10 +9,19 @@ import {
 } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import { Brightness4, Brightness7, Home, Menu } from "@mui/icons-material";
-import React, { useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import SideList from "./SideList";
 import { useNavigate } from "react-router-dom";
 import NotificationBell from "../../components/NotificationBell";
+
+const events = [
+  "load",
+  "mousemove",
+  "mousedown",
+  "click",
+  "scroll",
+  "keypress",
+];
 
 const drawerWidth = 280;
 
@@ -35,6 +44,37 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 export default function Dashboard() {
+  let timer;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleLogoutTimer = () => {
+    timer = setTimeout(() => {
+      resetTimer();
+      Object.values(events).forEach((item) => {
+        window.removeEventListener(item, resetTimer);
+      });
+      logoutAction();
+    }, 1000 * 60 * 10);
+  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const resetTimer = useCallback(() => {
+    if (timer) clearTimeout(timer);
+  });
+  useEffect(() => {
+    Object.values(events).forEach((item) => {
+      window.addEventListener(item, () => {
+        resetTimer();
+        handleLogoutTimer();
+      });
+    });
+  }, [handleLogoutTimer, resetTimer]);
+
+  const logoutAction = () => {
+    window.alert("Oturum süreniz dolmuştur. Lütfen tekrar giriş yapınız.");
+    sessionStorage.clear();
+    window.location.pathname = "/";
+  };
+
   const [open, setOpen] = React.useState(false);
   const [dark, setDark] = React.useState(true);
 
