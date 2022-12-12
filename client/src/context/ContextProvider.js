@@ -19,6 +19,7 @@ const initialState = {
   tasks: [],
   events: [],
   assigned: null,
+  assigneeMail: null,
   companies: [],
   company: null,
   personName: [],

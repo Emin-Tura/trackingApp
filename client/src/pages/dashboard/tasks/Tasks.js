@@ -10,6 +10,7 @@ import React, { useCallback, useEffect, useRef } from "react";
 import { Check } from "@mui/icons-material";
 import { useValue } from "../../../context/ContextProvider";
 import { createTask, getTasks } from "../../../actions/task";
+import { sendMail } from "../../../actions/sendMail";
 import ChipSelect from "./ChipSelect";
 import { getUsers } from "../../../actions/user";
 import TasksList from "./TasksList";
@@ -17,20 +18,21 @@ import TasksList from "./TasksList";
 const Tasks = ({ setSelectedLink, link }) => {
   const {
     dispatch,
-    state: { currentUser, assigned, render },
+    state: { currentUser, assigned, render, assigneeMail },
   } = useValue();
   const taskRef = useRef();
-
   const handleTaskSubmit = useCallback(
     (e) => {
       e.preventDefault();
       const task = taskRef.current.value;
       const newTask = { task, assigned, currentUser };
+      sendMail({ assigneeMail, task }, dispatch);
       createTask(newTask, dispatch);
       taskRef.current.value = "";
       dispatch({ type: "UPDATE_PERSON_NAME", payload: [] });
+      dispatch({ type: "SET_ASSIGNEE_MAIL", payload: [] });
     },
-    [assigned, currentUser, dispatch]
+    [assigned, assigneeMail, currentUser, dispatch]
   );
 
   useEffect(() => {

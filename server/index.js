@@ -7,6 +7,7 @@ import taskRouter from "./routes/taskRouter.js";
 import documentRouter from "./routes/documentRouter.js";
 import eventRouter from "./routes/eventRouter.js";
 import companyRouter from "./routes/companyRouter.js";
+import mailRouter from "./routes/mailRouter.js";
 import startServer from "./database/db.js";
 dotenv.config();
 
@@ -37,6 +38,7 @@ app.use(cors());
 app.use("/user", userRouter);
 app.use("/product", productRouter);
 app.use("/task", taskRouter);
+app.use("/sendMail", mailRouter);
 app.use("/document", documentRouter);
 app.use("/event", eventRouter);
 app.use("/company", companyRouter);

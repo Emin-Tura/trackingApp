@@ -87,8 +87,8 @@ const Calendar = ({ setSelectedLink, link }) => {
           <MonthView displayName={locale === "tr-TR" && "Ay"} />
           <DayView
             displayName={locale === "tr-TR" && "Gün"}
-            startDayHour={8}
-            endDayHour={18}
+            startDayHour={6}
+            endDayHour={24}
           />
           <AllDayPanel messages={{ allDay: "Tüm Gün" }} />
           <Toolbar />

@@ -128,6 +128,12 @@ const reducer = (state, action) => {
         ...state,
         personName: action.payload,
       };
+
+    case "SET_ASSIGNEE_MAIL":
+      return {
+        ...state,
+        assigneeMail: action.payload,
+      };
   }
 };
 

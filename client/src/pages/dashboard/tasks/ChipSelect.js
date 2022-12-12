@@ -47,6 +47,12 @@ const ChipSelect = ({ required }) => {
     // setPersonName(typeof value === "string" ? value.split(",") : value);
     dispatch({ type: "UPDATE_PERSON_NAME", payload: value });
     dispatch({ type: "SET_ASSIGNEE", payload: value });
+    dispatch({
+      type: "SET_ASSIGNEE_MAIL",
+      payload: users
+        .filter((user) => value.includes(user.name))
+        .map((value) => value.email),
+    });
   };
 
   return (
