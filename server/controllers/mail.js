@@ -1,5 +1,4 @@
 import tryCatch from "./utils/tryCatch.js";
-import Task from "../models/Task.js";
 import sendEmail from "./utils/sendEmail.js";
 
 export const createMail = tryCatch(async (req, res) => {
