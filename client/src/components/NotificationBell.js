@@ -14,6 +14,7 @@ import { useValue } from "../context/ContextProvider";
 import { Box } from "@mui/system";
 import moment from "moment";
 import NotificationSound from "./notificationSound.mp3";
+import { useNavigate } from "react-router-dom";
 
 const NotificationBell = () => {
   const {
@@ -38,6 +39,8 @@ const NotificationBell = () => {
       audioPlayer.current.play();
     }
   }, [badgeContent]);
+
+  const navigate = useNavigate();
 
   return (
     <PopupState variant="popover" popupId="demo-popup-popover">
@@ -84,7 +87,10 @@ const NotificationBell = () => {
                   task.assigned.filter((name) => name === currentUser.name)
                     .length ? (
                     <Box key={task?._id}>
-                      <ListItem>
+                      <ListItem
+                        onClick={() => navigate("/tasks")}
+                        sx={{ cursor: "pointer" }}
+                      >
                         <ListItemText
                           primary={`${task?.task}`}
                           secondary={`Oluşturma Zamanı: ${moment(

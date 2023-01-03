@@ -26,6 +26,7 @@ import {
 } from "@devexpress/dx-react-scheduler-material-ui";
 import messages from "../../../components/language";
 import { v4 as uuidv4 } from "uuid";
+import SendCalendarMail from "./SendCalendarMail";
 
 const Calendar = ({ setSelectedLink, link }) => {
   const {
@@ -41,6 +42,7 @@ const Calendar = ({ setSelectedLink, link }) => {
   const commitChanges = useCallback(
     ({ added, changed, deleted }) => {
       if (added) {
+        dispatch({ type: "OPEN_LOGIN" });
         setId(uuidv4());
         createEvent({ added, id }, dispatch);
       }
@@ -113,6 +115,7 @@ const Calendar = ({ setSelectedLink, link }) => {
             readOnly={currentUser.authority !== "Yetki Yok" ? false : true}
           />
           {currentUser.authority !== "Yetki Yok" && <DragDropProvider />}
+          <SendCalendarMail />
         </Scheduler>
       </Paper>
     </>
